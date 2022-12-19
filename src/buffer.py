@@ -30,8 +30,5 @@ class ReplayMemory(object):
 
     def save_local(self,output_name):
         torch.save(self.memory, output_name)
-
-        print('memory sizee: ', sys.getsizeof(self.memory))
         self.memory.clear()
-        print('memory sizee: ', sys.getsizeof(self.memory))
 
