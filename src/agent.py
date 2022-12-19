@@ -1,4 +1,4 @@
-from network import DqnNet
+from src.network import DqnNet
 import random
 import math
 import torch

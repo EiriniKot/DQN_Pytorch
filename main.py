@@ -2,9 +2,9 @@ import json
 import gym
 import numpy as np
 import torch
-from agent import DqnAgent
-from network import DqnNet
-from buffer import ReplayMemory, Transition
+from src.agent import DqnAgent
+from src.network import DqnNet
+from src.buffer import ReplayMemory, Transition
 from itertools import count
 from matplotlib import pyplot as plt
 import psutil
