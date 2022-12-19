@@ -121,14 +121,12 @@ class GamesRunner:
 
                     # Getting % usage of virtual_memory ( 3rd field)
                     ram_percentage = psutil.virtual_memory()[2]
-                    print(ram_percentage)
                     if ram_percentage > self.ram_thres:
                         self.r_buffer.save_local(f'{self.run_time}/{ep}_{t}')
-                        time.sleep(5)
 
             self.r_buffer.save_local(f'{ep}_{t}_{self.run_time}')
-            # plt.plot(self.agent.loss_saver)
-            # plt.show()
+            plt.plot(self.agent.loss_saver)
+            plt.show()
             self.envs[env]=None
 
 
