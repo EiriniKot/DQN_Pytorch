@@ -3,4 +3,3 @@ gym[atari]==0.21.0
 gym[accept-rom-license]
 matplotlib
 torch
-json
