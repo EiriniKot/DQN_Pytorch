@@ -47,7 +47,7 @@ class GamesRunner:
                               device=self.device,
                               optimizer=specs['optimizer'], **specs['policy_specs'])
         self.run_time = str(time.time())
-        os.mkdir(self.run_time)
+        os.mkdir('saved_games')
 
     def get_init_state(self, env):
         # Initialize the environment and state
@@ -122,7 +122,7 @@ class GamesRunner:
                     # Getting % usage of virtual_memory ( 3rd field)
                     ram_percentage = psutil.virtual_memory()[2]
                     if ram_percentage > self.ram_thres:
-                        self.r_buffer.save_local(f'{self.run_time}/{ep}_{t}')
+                        self.r_buffer.save_local(f'saved_games/{self.run_time}/{ep}_{t}')
 
             self.r_buffer.save_local(f'{ep}_{t}_{self.run_time}')
             plt.plot(self.agent.loss_saver)
