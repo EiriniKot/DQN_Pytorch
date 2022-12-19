@@ -18,7 +18,6 @@ class ReplayMemory(object):
 
     def push(self, state, action, next_state, reward):
         """Save a transition"""
-        print('memory sizee: ', sys.getsizeof(self.memory))
         self.memory.append(Transition(state, action, next_state, reward))
 
     def sample(self, batch_size):
