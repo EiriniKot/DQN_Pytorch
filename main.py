@@ -127,15 +127,16 @@ class GamesRunner:
 
 
 if __name__ == '__main__':
-    f = open('envs.json')
-    json_config = json.load(f)
-    runner = GamesRunner(json_config,
-                         ram_thres = 70.,
-                         batch =2,
-                         h=120, w=120,
-                         capacity=None,
-                         num_episodes=2)
-    runner.run()
+    # f = open('envs.json')
+    # json_config = json.load(f)
+    # runner = GamesRunner(json_config,
+    #                      ram_thres = 70.,
+    #                      batch =2,
+    #                      h=120, w=120,
+    #                      capacity=None,
+    #                      num_episodes=2)
+    # runner.run()
+    pass
 
 
 
