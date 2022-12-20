@@ -124,7 +124,6 @@ class GamesRunner:
             self.r_buffer.save_local(f'{ep}_{t}_{self.run_time}')
             plt.plot(self.agent.loss_saver)
             plt.show()
-            self.envs[env]=None
 
 
 if __name__ == '__main__':
