@@ -48,7 +48,7 @@ class GamesRunner:
                               optimizer=specs['optimizer'], **specs['policy_specs'])
         self.run_time = str(time.time())
 
-        if not os.isdir('saved_games'):
+        if not os.path.isdir('saved_games'):
             os.mkdir('saved_games')
 
     def get_init_state(self, env):
@@ -137,7 +137,7 @@ if __name__ == '__main__':
                          batch =2,
                          h=120, w=120,
                          capacity=None,
-                         num_episodes=50)
+                         num_episodes=2)
     runner.run()
 
 
