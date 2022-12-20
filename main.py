@@ -48,8 +48,7 @@ class GamesRunner:
                               optimizer=specs['optimizer'], **specs['policy_specs'])
         self.run_time = str(time.time())
 
-        if not os.path.isdir('saved_games'):
-            os.mkdir('saved_games')
+        os.makedirs('saved_games', exist_ok=True)
 
     def get_init_state(self, env):
         # Initialize the environment and state
