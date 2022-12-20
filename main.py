@@ -47,10 +47,7 @@ class GamesRunner:
                               device=self.device,
                               optimizer=specs['optimizer'], **specs['policy_specs'])
         self.run_time = str(time.time())
-
-        print(os.getcwd())
         os.makedirs('saved_games', exist_ok=True)
-        cdd
 
     def get_init_state(self, env):
         # Initialize the environment and state
