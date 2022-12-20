@@ -104,7 +104,7 @@ class GamesRunner:
                     self.r_buffer.push(state, action, next_state, reward)
 
                     state = next_state
-                    if len(self.r_buffer) >= self.batch and t%10==0:
+                    if len(self.r_buffer) >= self.batch and t%self.batch==0:
                         transitions = self.r_buffer.sample(self.batch)
                         experience = Transition(*zip(*transitions))
                         # Perform one step of the optimization (on the policy network)
