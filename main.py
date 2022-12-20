@@ -65,10 +65,9 @@ class GamesRunner:
         del init_state, new_shape, empty_states
         return cat_states
 
-
     def run(self):
         new_shape = (1, 3, 1, self.h, self.w)
-
+        os.mkdir(f'saved_games/{self.run_time}')
         for env_n, env in self.envs.items():
             print(f'Environment --- {env_n} ---')
             state = self.get_init_state(env)
@@ -106,7 +105,6 @@ class GamesRunner:
 
                     state = next_state
                     if len(self.r_buffer) >= self.batch and t%10==0:
-                        print('train')
                         transitions = self.r_buffer.sample(self.batch)
                         experience = Transition(*zip(*transitions))
                         # Perform one step of the optimization (on the policy network)
@@ -114,7 +112,6 @@ class GamesRunner:
                         del experience, transitions, next_state, reward, action
 
                     self.agent.update_target(t)
-
                     if done:
                         print('Episode ended \n')
                         break
