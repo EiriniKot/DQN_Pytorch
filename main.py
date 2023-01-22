@@ -50,8 +50,10 @@ class GamesRunner:
     def get_init_state(self, env):
         # Initialize the environment and state
         init_state = env.reset()[0]
+        print(init_state.shape)
         init_state = np.divide(init_state, 255.)
         print('init_state', init_state.shape)
+        fffff
         # BCHW
         init_state = np.transpose(init_state, (2, 0, 1))
         new_shape = (1, 3, 1, self.h, self.w)
