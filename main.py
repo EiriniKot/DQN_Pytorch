@@ -11,8 +11,6 @@ import psutil
 import time
 import os
 
-torch.autograd.set_detect_anomaly(True)
-
 
 class GamesRunner:
     def __init__(self, specs, h, w,
@@ -51,7 +49,7 @@ class GamesRunner:
 
     def get_init_state(self, env):
         # Initialize the environment and state
-        init_state = env.reset()
+        init_state = env.reset()[0]
         init_state = np.divide(init_state, 255.)
         # BCHW
         init_state = np.transpose(init_state, (2, 0, 1))
@@ -79,7 +77,7 @@ class GamesRunner:
                     # print(f'Number of timestep {t}')
                     # Select and perform an action
                     action = self.agent.policy(state)
-                    next_state, reward, done, info = env.step(action.item())
+                    next_state, reward, done, truncated, info = env.step(action)
                     next_state = np.divide(next_state, 255.)
                     next_state = np.transpose(next_state, (2, 0, 1))
 
@@ -94,12 +92,12 @@ class GamesRunner:
                         next_state = torch.from_numpy(next_state).type(torch.float32)
                         next_state = torch.cat((state[:, :, 1:, :, :], next_state), 2)
 
-                    reward = np.resize(reward, (1, 1))
+                    # reward = np.resize(reward, (1, 1))
                     reward = torch.tensor(reward, device=None).detach()
 
-                    action = np.resize(action, (1, 1))
+                    # action = np.resize(action, (1, 1))
                     action = torch.tensor(action, device=None).detach()
-
+                    print(action)
                     # Store the transition in memory
                     self.r_buffer.push(state, action, next_state, reward)
 
@@ -121,22 +119,22 @@ class GamesRunner:
                     if ram_percentage > self.ram_thres:
                         self.r_buffer.save_local(f'saved_games/{self.run_time}/{ep}_{t}')
 
-            self.r_buffer.save_local(f'{ep}_{t}_{self.run_time}')
-            plt.plot(self.agent.loss_saver)
+            self.r_buffer.save_local(f'saved_games/{self.run_time}/{ep}_{t}')
+            plt.plot(self.agent.loss_saver[5:])
             plt.show()
 
 
 if __name__ == '__main__':
-    # f = open('envs.json')
-    # json_config = json.load(f)
-    # runner = GamesRunner(json_config,
-    #                      ram_thres = 70.,
-    #                      batch =2,
-    #                      h=120, w=120,
-    #                      capacity=None,
-    #                      num_episodes=2)
-    # runner.run()
-    pass
+    f = open('envs.json')
+    json_config = json.load(f)
+    runner = GamesRunner(json_config,
+                         ram_thres = 70.,
+                         batch =2,
+                         h=120, w=120,
+                         capacity=None,
+                         num_episodes=3)
+    runner.run()
+
 
 
 

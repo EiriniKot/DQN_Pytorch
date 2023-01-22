@@ -63,9 +63,9 @@ class DqnAgent:
                 values = self.policy_net(state)
                 sample_max_val_index = values.max(1)
                 sample_max_index = sample_max_val_index[1]
-                batched_index = sample_max_index.view(1, 1).detach()
+                batched_index = sample_max_index.detach()
         else:
-            batched_index = torch.tensor([[random.randrange(self.n_actions)]], device=self.device, dtype=torch.long)
+            batched_index = torch.tensor([random.randrange(self.n_actions)], device=self.device, dtype=torch.long)
 
         return batched_index
 
@@ -76,14 +76,22 @@ class DqnAgent:
                                            if s is not None], 0)
         state_batch = torch.cat(experience.state, 0)
         action_batch = torch.cat(experience.action, 0)
-        reward_batch = torch.cat(experience.reward, 0)
+        reward_batch = torch.stack(experience.reward, 0)
+
+        # state_batch = ['s1, s2, s3, s4' -> values for a4]
         out = self.policy_net(state_batch)
-        state_action_values = out.gather(1, action_batch)
+        print('action_batch',action_batch)
+        # Action batch is the indexes that where played -batched
+        print('out', out)
+        state_action_values = torch.gather(out, 1, index=action_batch)
+        # State a values are the values that the network predicted for this state action pair
+
         next_state_values = torch.zeros(len(experience.state))
         with torch.no_grad():
             next_state_values[non_final_mask] = self.target_net(non_final_next_states).max(1)[0]
+
         # Compute the expected Q values
-        expected_state_action_values = (next_state_values * self.gamma) + reward_batch
+        expected_state_action_values = torch.add(next_state_values * self.gamma, reward_batch)
         loss = self.criterion(state_action_values, expected_state_action_values.unsqueeze(1))
         self.optimizer.zero_grad()
         loss.backward()
