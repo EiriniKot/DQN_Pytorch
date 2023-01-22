@@ -74,7 +74,6 @@ class GamesRunner:
             for ep in range(self.num_episodes):
                 print(f'Episode number --- {ep} ---')
                 env.reset()
-
                 for t in count():
                     # print(f'Number of timestep {t}')
                     # Select and perform an action
@@ -115,9 +114,9 @@ class GamesRunner:
                     # Getting % usage of virtual_memory ( 3rd field)
                     ram_percentage = psutil.virtual_memory()[2]
                     if ram_percentage > self.ram_thres:
-                        self.r_buffer.save_local(f'saved_games/{self.run_time}/{ep}_{t}')
+                        self.r_buffer.save_local(f'saved_games/{self.run_time}/{ep}_{t}_{env_n}')
 
-            self.r_buffer.save_local(f'saved_games/{self.run_time}/{ep}_{t}')
+            self.r_buffer.save_local(f'saved_games/{self.run_time}/{ep}_{t}_{env_n}')
             plt.plot(self.agent.loss_saver[5:])
             plt.show()
 
