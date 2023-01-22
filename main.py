@@ -111,11 +111,13 @@ class GamesRunner:
                         print('Episode ended \n')
                         break
 
-                    # Getting % usage of virtual_memory ( 3rd field)
+                    # Getting % usage of virtual_memory (3rd field)
                     ram_percentage = psutil.virtual_memory()[2]
                     if ram_percentage > self.ram_thres:
+                        print('Ram percentage over threshold', ram_percentage)
                         self.r_buffer.save_local(f'saved_games/{self.run_time}/{ep}_{t}_{env_n}')
 
+            print('Final Save')
             self.r_buffer.save_local(f'saved_games/{self.run_time}/{ep}_{t}_{env_n}')
             plt.plot(self.agent.loss_saver[5:])
             plt.show()
