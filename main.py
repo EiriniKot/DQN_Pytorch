@@ -128,7 +128,7 @@ class GamesRunner:
 
         metadata = pd.DataFrame(str_info,
                                 columns=['env_name', 'episode', 'number_of_steps'])
-        metadata.to_csv('metadata')
+        metadata.to_csv('metadata.csv')
 
 
 
