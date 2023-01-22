@@ -1,6 +1,7 @@
 import json
 import gym
 import numpy as np
+import pandas as pd
 import torch
 from src.agent import DqnAgent
 from src.network import DqnNet
@@ -66,6 +67,7 @@ class GamesRunner:
         return cat_states
 
     def run(self):
+        str_info = []
         new_shape = (1, 3, 1, self.h, self.w)
         os.mkdir(f'saved_games/{self.run_time}')
         for env_n, env in self.envs.items():
@@ -117,10 +119,17 @@ class GamesRunner:
                         print('Ram percentage over threshold', ram_percentage)
                         self.r_buffer.save_local(f'saved_games/{self.run_time}/{ep}_{t}_{env_n}')
 
+                str_info.append([env_n,ep,t])
+
             print('Final Save')
             self.r_buffer.save_local(f'saved_games/{self.run_time}/{ep}_{t}_{env_n}')
             plt.plot(self.agent.loss_saver[5:])
             plt.show()
+
+        metadata = pd.DataFrame(str_info,
+                                columns=['env_name', 'episode', 'number_of_steps'])
+        metadata.to_csv('metadata')
+
 
 
 if __name__ == '__main__':
