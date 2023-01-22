@@ -14,8 +14,8 @@ class DqnNet(nn.Module):
         # Number of Linear input connections depends on output of conv2d layers
         # and therefore the input image size, so compute it.
 
-        def conv3d_size_out(size, kernel_size = 3, stride = 2):
-            return (size - (kernel_size - 1) - 1) // stride  + 1
+        def conv3d_size_out(size, kernel_size=3, stride=2):
+            return (size - (kernel_size - 1) - 1) // stride + 1
 
         convw = conv3d_size_out(conv3d_size_out(conv3d_size_out(w)))
         convh = conv3d_size_out(conv3d_size_out(conv3d_size_out(h)))

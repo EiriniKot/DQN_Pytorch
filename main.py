@@ -92,12 +92,8 @@ class GamesRunner:
                         next_state = torch.from_numpy(next_state).type(torch.float32)
                         next_state = torch.cat((state[:, :, 1:, :, :], next_state), 2)
 
-                    # reward = np.resize(reward, (1, 1))
                     reward = torch.tensor(reward, device=None).detach()
-
-                    # action = np.resize(action, (1, 1))
                     action = torch.tensor(action, device=None).detach()
-                    print(action)
                     # Store the transition in memory
                     self.r_buffer.push(state, action, next_state, reward)
 

@@ -80,12 +80,10 @@ class DqnAgent:
 
         # state_batch = ['s1, s2, s3, s4' -> values for a4]
         out = self.policy_net(state_batch)
-        print('action_batch',action_batch)
         # Action batch is the indexes that where played -batched
-        print('out', out)
-        state_action_values = torch.gather(out, 1, index=action_batch)
-        # State a values are the values that the network predicted for this state action pair
+        state_action_values = torch.gather(out, 1, index=(action_batch.unsqueeze(1)))
 
+        # State a values are the values that the network predicted for this state action pair
         next_state_values = torch.zeros(len(experience.state))
         with torch.no_grad():
             next_state_values[non_final_mask] = self.target_net(non_final_next_states).max(1)[0]
