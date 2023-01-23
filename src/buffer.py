@@ -2,6 +2,7 @@ from collections import namedtuple, deque
 import random
 import torch
 import sys
+import io
 Transition = namedtuple('Transition',
                         ('state', 'action', 'next_state', 'reward'))
 
@@ -30,7 +31,11 @@ class ReplayMemory(object):
     def save_local(self, output_name):
         if len(self.memory) > 0:
             print(self.memory)
-            torch.save(self.memory, output_name)
+            # Save to io.BytesIO buffer
+            buffer = io.BytesIO()
+            torch.save(self.memory, buffer)
+            # torch.save(self.memory, output_name)
+
 
         self.memory.clear()
 

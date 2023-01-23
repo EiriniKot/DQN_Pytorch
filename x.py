@@ -1,4 +1,4 @@
-path = '/home/eirini/Downloads/4_185_BerzerkDeterministic-v4.pt'
+path = '/home/eirini/Downloads/0_241_BerzerkDeterministic-v4.pt'
 
 import torch
 
