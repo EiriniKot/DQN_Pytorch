@@ -18,10 +18,6 @@ class ReplayMemory(object):
 
     def push(self, state, action, next_state, reward):
         """Save a transition"""
-        state = torch.zeros(state.size)
-        action = torch.zeros(action.size)
-        next_state = torch.zeros(next_state.size)
-        reward = torch.zeros(reward.size)
         self.memory.append(Transition(state, action, next_state, reward))
 
     def sample(self, batch_size):
