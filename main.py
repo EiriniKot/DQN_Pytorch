@@ -117,13 +117,13 @@ class GamesRunner:
                     ram_percentage = psutil.virtual_memory()[2]
                     if ram_percentage > self.ram_thres:
                         print('Ram percentage over threshold', ram_percentage)
-                        self.r_buffer.save_local(f'saved_games/{ep}_{t}_{env_n}.pkl')
+                        self.r_buffer.save_local(f'saved_games/{ep}_{t}_{env_n}.pt')
 
 
                 str_info.append([env_n,ep,t])
 
             print('Final Save')
-            self.r_buffer.save_local(f'saved_games/{ep}_{t}_{env_n}.pkl')
+            self.r_buffer.save_local(f'saved_games/{ep}_{t}_{env_n}.pt')
             plt.plot(self.agent.loss_saver[5:])
             plt.show()
 

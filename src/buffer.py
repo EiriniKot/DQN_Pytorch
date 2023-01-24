@@ -30,7 +30,12 @@ class ReplayMemory(object):
 
     def save_local(self, output_name):
         if len(self.memory) > 0:
-            # self.memory.detach()
+            self.memory.detach()
             torch.save(self.memory, output_name)
         self.memory.clear()
+
+    def load_torch(self,directory):
+        read_tensor = torch.save(directory)
+        print('read',read_tensor)
+        return read_tensor
 
