@@ -4,4 +4,3 @@ torch==1.13.0
 gym==0.26.2
 gym[atari]==0.26.2
 gym[accept-rom-license]
-io
