@@ -35,7 +35,7 @@ class ReplayMemory(object):
         self.memory.clear()
 
     def load_torch(self,directory):
-        read_tensor = torch.save(directory)
+        read_tensor = torch.load(directory)
         print('read',read_tensor)
         return read_tensor
 
