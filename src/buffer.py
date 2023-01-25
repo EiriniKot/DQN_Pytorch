@@ -30,7 +30,6 @@ class ReplayMemory(object):
 
     def save_local(self, output_name):
         if len(self.memory) > 0:
-            self.memory.detach()
             torch.save(self.memory, output_name)
         self.memory.clear()
 

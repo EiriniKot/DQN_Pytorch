@@ -73,6 +73,7 @@ class GamesRunner:
         for env_n, env in self.envs.items():
             print(f'Environment --- {env_n} ---')
             state = self.get_init_state(env)
+            print(state.shape)
             for ep in range(self.num_episodes):
                 print(f'Episode number --- {ep} ---')
                 env.reset()
@@ -81,19 +82,14 @@ class GamesRunner:
                     # Select and perform an action
                     action = self.agent.policy(state)
                     next_state, reward, done, truncated, info = env.step(action)
+
+                    # Preprocess
                     next_state = np.divide(next_state, 255.)
                     next_state = np.transpose(next_state, (2, 0, 1))
 
-                    if t < self.window_size:
-                        # BCDHW
-                        next_state = np.resize(next_state, new_shape)
-                        next_state = torch.from_numpy(next_state).type(torch.float32)
-                        next_state = torch.cat((state[:, :, 1:, :, :], next_state), 2)
-                    else:
-                        # BCDHW
-                        next_state = np.resize(next_state, new_shape)
-                        next_state = torch.from_numpy(next_state).type(torch.float32)
-                        next_state = torch.cat((state[:, :, 1:, :, :], next_state), 2)
+                    next_state = np.resize(next_state, new_shape)
+                    next_state = torch.from_numpy(next_state).type(torch.float32)
+                    next_state = torch.cat((state[:, :, 1:, :, :], next_state), 2)
 
                     reward = torch.tensor(reward, device=None).detach()
                     action = torch.tensor(action, device=None).detach()
