@@ -19,11 +19,13 @@ class DqnAgent:
         assert isinstance(network_obj, DqnNet), "Should pass a instance of a DqnNet"
         self.device = device
 
+        # Copy both networks into device
         self.policy_net = network_obj.to(device)
         self.target_net = network_obj.to(device)
         self.target_net.load_state_dict(self.policy_net.state_dict())
 
         self.target_freq = target_freq
+
         # Disables grad eval
         self.target_net.eval()
 
@@ -81,6 +83,7 @@ class DqnAgent:
         # state_batch = ['s1, s2, s3, s4' -> values for a4]
         out = self.policy_net(state_batch)
         # Action batch is the indexes that where played -batched
+
         state_action_values = torch.gather(out, 1, index=(action_batch.unsqueeze(1)))
 
         # State a values are the values that the network predicted for this state action pair
@@ -90,7 +93,10 @@ class DqnAgent:
 
         # Compute the expected Q values
         expected_state_action_values = torch.add(next_state_values * self.gamma, reward_batch)
+
         loss = self.criterion(state_action_values, expected_state_action_values.unsqueeze(1))
+        print(loss)
+
         self.optimizer.zero_grad()
         loss.backward()
         # In-place gradient clipping
