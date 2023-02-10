@@ -43,7 +43,8 @@ class DqnAgent:
 
         self.loss_saver = []
         # Compute Huber loss
-        self.criterion = nn.SmoothL1Loss()
+        # self.criterion = nn.SmoothL1Loss()
+        self.criterion = nn.MSELoss()
 
     def policy(self, state):
         """
