@@ -5,7 +5,6 @@ import torch
 from torch import nn
 import torch.optim as optim
 
-from pytorch_memlab import MemReporter
 
 class DqnAgent:
     def __init__(self, network_obj,
