@@ -11,7 +11,7 @@ from matplotlib import pyplot as plt
 import psutil
 import time
 import os
-
+from PIL import Image
 
 class GamesRunner:
     def __init__(self, specs, h, w,
@@ -22,7 +22,7 @@ class GamesRunner:
 
         self.envs = {}
         for env in specs['train_envs']:
-            self.envs[env] = gym.make(env)
+            self.envs[env] = gym.make(env, render_mode='rgb_array')
         n_actions = self.envs[env].action_space.n
 
         self.h = h
@@ -80,17 +80,16 @@ class GamesRunner:
                 env.reset()
                 sum_reward = 0
                 for t in count():
-                    print(f'Number of timestep {t}')
+                    # arr = np.ascontiguousarray(env.render())*256
+                    # img = Image.fromarray(arr, 'RGB')
+                    # img.save(f"out{ep}{t}.png")
+                    #
+                    # print(f'Number of timestep {t}')
                     # Select and perform an action
+                    # print(state)
                     action = self.agent.policy(state)
-                    print(action)
                     next_state, reward, done, truncated, info = env.step(action)
                     sum_reward += reward
-
-                    # if reward!=0:
-                    #     print('reward', reward)
-                    # else:
-                    #     reward = -0.5
 
                     # Preprocess
                     # next_state = np.divide(next_state, 255.)

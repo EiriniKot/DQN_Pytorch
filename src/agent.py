@@ -56,7 +56,7 @@ class DqnAgent:
         eps_threshold = self.eps_end + (self.eps_start - self.eps_end) * \
                         math.exp(-1. * self.steps_done / self.eps_decay)
         self.steps_done += 1
-        if prop_random > eps_threshold:
+        if prop_random < eps_threshold:
             # GREEDY
             with torch.no_grad():
                 # t.max(1) will return largest column value of each row.
