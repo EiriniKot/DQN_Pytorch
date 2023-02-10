@@ -69,7 +69,7 @@ class GamesRunner:
     def run(self):
         str_info = []
         new_shape = (1, 3, 1, self.h, self.w)
-        os.mkdir(f'saved_games/{self.run_time}')
+        # os.mkdir(f'saved_games/{self.run_time}')
         scores = {}
         for env_n, env in self.envs.items():
             print(f'Environment --- {env_n} ---')
@@ -102,11 +102,13 @@ class GamesRunner:
                     next_state = torch.cat((state[:, :, 1:, :, :], next_state), 2)
 
                     reward = torch.tensor(reward, device=None).detach()
+
                     action = torch.tensor(action, device=None).detach()
                     # Store the transition in memory
                     self.r_buffer.push(state, action, next_state, reward)
 
                     state = next_state
+
                     if len(self.r_buffer) >= self.batch and t%self.batch==0:
                         transitions = self.r_buffer.sample(self.batch)
                         experience = Transition(*zip(*transitions))
@@ -125,7 +127,6 @@ class GamesRunner:
                         print('Ram percentage over threshold', ram_percentage)
                         self.r_buffer.save_local(f'saved_games/{ep}_{t}_{env_n}.pt')
                     if self.save!=True:
-
                         self.r_buffer.memory.clear()
 
                 scores[env_n].append(sum_reward)
@@ -154,6 +155,7 @@ if __name__ == '__main__':
                          batch =64,
                          h=180, w=180,
                          capacity=None,
+                         save=True,
                          num_episodes=100)
     scores = runner.run()
 
