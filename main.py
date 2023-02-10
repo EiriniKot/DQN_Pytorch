@@ -53,9 +53,7 @@ class GamesRunner:
     def get_init_state(self, env):
         # Initialize the environment and state
         init_state = env.reset()[0]
-        print(init_state.shape)
         # init_state = np.divide(init_state, 255.)
-        print('init_state', init_state.shape)
         # BCHW
         init_state = np.transpose(init_state, (2, 0, 1))
         new_shape = (1, 3, 1, self.h, self.w)
@@ -89,11 +87,10 @@ class GamesRunner:
                     next_state, reward, done, truncated, info = env.step(action)
                     sum_reward += reward
 
-                    if reward!=0:
-                        print('reward', reward)
-                    else:
-                        reward = -0.5
-
+                    # if reward!=0:
+                    #     print('reward', reward)
+                    # else:
+                    #     reward = -0.5
 
                     # Preprocess
                     # next_state = np.divide(next_state, 255.)
@@ -111,7 +108,6 @@ class GamesRunner:
                     state = next_state
                     if len(self.r_buffer) >= self.batch and t%self.batch==0:
                         transitions = self.r_buffer.sample(self.batch)
-
                         experience = Transition(*zip(*transitions))
                         # Perform one step of the optimization (on the policy network)
                         self.agent.train(experience)
