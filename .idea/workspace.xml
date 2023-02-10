@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="31362192-53f9-4de1-9848-8a0095f9596e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/networks/models_arch.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/metadata.csv" beforeDir="false" afterPath="$PROJECT_DIR$/metadata.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agent.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/buffer.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/buffer.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/network.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,7 +37,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/eirini/PycharmProjects/DQN_Pytorch",
+    "last_opened_file_path": "/home/eirini/PycharmProjects/THT_build",
     "node.js.detected.package.eslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
@@ -109,7 +110,8 @@
       <workItem from="1674509961245" duration="2806000" />
       <workItem from="1674572401991" duration="7244000" />
       <workItem from="1674667124942" duration="3057000" />
-      <workItem from="1675955344793" duration="1770000" />
+      <workItem from="1675955344793" duration="5428000" />
+      <workItem from="1676021094353" duration="16000" />
     </task>
     <servers />
   </component>
@@ -128,7 +130,7 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/DQN_Pytorch$main.coverage" NAME="main Coverage Results" MODIFIED="1675957088380" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DQN_Pytorch$main.coverage" NAME="main Coverage Results" MODIFIED="1675968984618" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$x.coverage" NAME="x Coverage Results" MODIFIED="1674510725320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

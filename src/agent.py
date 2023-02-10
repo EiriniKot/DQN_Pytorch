@@ -85,9 +85,9 @@ class DqnAgent:
         # Action batch is the indexes that where played -batched
 
         state_action_values = torch.gather(out, 1, index=(action_batch.unsqueeze(1)))
-
         # State a values are the values that the network predicted for this state action pair
         next_state_values = torch.zeros(len(experience.state))
+
         with torch.no_grad():
             next_state_values[non_final_mask] = self.target_net(non_final_next_states).max(1)[0]
 
@@ -95,12 +95,11 @@ class DqnAgent:
         expected_state_action_values = torch.add(next_state_values * self.gamma, reward_batch)
 
         loss = self.criterion(state_action_values, expected_state_action_values.unsqueeze(1))
-        print(loss)
 
         self.optimizer.zero_grad()
         loss.backward()
         # In-place gradient clipping
-        torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 100)
+        torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 80)
         self.loss_saver.append(loss.detach().numpy())
         return loss
 
@@ -113,6 +112,7 @@ class DqnAgent:
         # Update the target network, copying all weights and biases in DQN
         if t % self.target_freq == 0:
             self.target_net.load_state_dict(self.policy_net.state_dict())
+
 
 
 
