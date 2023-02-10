@@ -7,4 +7,4 @@
                "window_step": 1},
   "target_freq": 3,
   "policy_specs": {"gamma":0.99,"eps_start":0.9,
-                  "eps_end":0.05,"eps_decay":200}}
+                  "eps_end":0.05,"eps_decay":1000}}

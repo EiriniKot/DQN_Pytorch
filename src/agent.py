@@ -5,6 +5,7 @@ import torch
 from torch import nn
 import torch.optim as optim
 
+from pytorch_memlab import MemReporter
 
 class DqnAgent:
     def __init__(self, network_obj,
@@ -65,8 +66,8 @@ class DqnAgent:
                 # found, so we pick action with the larger expected reward.
                 values = self.policy_net(state)
                 sample_max_val_index = values.max(1)
-                sample_max_index = sample_max_val_index[1]
-                batched_index = sample_max_index.detach()
+                batched_index = sample_max_val_index[1]
+                # batched_index = sample_max_index.detach()
         else:
             batched_index = torch.tensor([random.randrange(self.n_actions)], device=self.device, dtype=torch.long)
 
@@ -96,12 +97,12 @@ class DqnAgent:
         expected_state_action_values = torch.add(next_state_values * self.gamma, reward_batch)
 
         loss = self.criterion(state_action_values, expected_state_action_values.unsqueeze(1))
-
         self.optimizer.zero_grad()
         loss.backward()
+
         # In-place gradient clipping
         torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 80)
-        self.loss_saver.append(loss.detach().numpy())
+        self.loss_saver.append(float(loss))
         return loss
 
     def train(self, experience):

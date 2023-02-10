@@ -11,7 +11,7 @@ from matplotlib import pyplot as plt
 import psutil
 import time
 import os
-from PIL import Image
+
 
 class GamesRunner:
     def __init__(self, specs, h, w,
@@ -75,10 +75,12 @@ class GamesRunner:
             print(f'Environment --- {env_n} ---')
             state = self.get_init_state(env)
             scores[env_n] = []
+            self.agent.steps_done = 0
             for ep in range(self.num_episodes):
                 print(f'Episode number --- {ep} ---')
                 env.reset()
                 sum_reward = 0
+
                 for t in count():
                     # arr = np.ascontiguousarray(env.render())*256
                     # img = Image.fromarray(arr, 'RGB')
@@ -123,6 +125,7 @@ class GamesRunner:
                         print('Ram percentage over threshold', ram_percentage)
                         self.r_buffer.save_local(f'saved_games/{ep}_{t}_{env_n}.pt')
                     if self.save!=True:
+
                         self.r_buffer.memory.clear()
 
                 scores[env_n].append(sum_reward)

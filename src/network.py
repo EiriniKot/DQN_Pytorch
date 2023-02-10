@@ -1,8 +1,10 @@
 from torch import nn
 import torch.nn.functional as F
+from pytorch_memlab import profile, set_target_gpu
 
 
 class DqnNet(nn.Module):
+    @profile
     def __init__(self, h, w, outputs):
         super(DqnNet, self).__init__()
         self.conv1 = nn.Conv3d(3, 16, kernel_size=(1, 3, 3), stride=2)
@@ -25,6 +27,7 @@ class DqnNet(nn.Module):
 
     # Called with either one element to determine next action, or a batch
     # during optimization. Returns tensor([[left0exp,right0exp]...]).
+
     def forward(self, x):
         x = F.relu(self.bn1(self.conv1(x)))
         x = F.relu(self.bn2(self.conv2(x)))
