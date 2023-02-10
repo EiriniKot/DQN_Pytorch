@@ -1,6 +1,5 @@
 from torch import nn
 import torch.nn.functional as F
-from pytorch_memlab import profile, set_target_gpu
 
 
 class DqnNet(nn.Module):
