@@ -1,8 +1,8 @@
 from collections import namedtuple, deque
-import random
+import random, os
 import torch
-import sys
-import io
+from torch.utils.data.dataset import IterableDataset
+
 Transition = namedtuple('Transition',
                         ('state', 'action', 'next_state', 'reward'))
 
@@ -34,7 +34,36 @@ class ReplayMemory(object):
         self.memory.clear()
 
     def load_torch(self, directory):
+        """
+        Simple Function for Loading .pt tensors
+        :param directory: a file-like object (has to implement :meth:`read`,
+                                              :meth:`readline`, :meth:`tell`, and :meth:`seek`),
+                                              or a string or os.PathLike object containing a file name
+        :return: torch.tensor
+        """
         read_tensor = torch.load(directory)
-        print('read',read_tensor)
         return read_tensor
+
+
+class ExperienceDataset(IterableDataset):
+    """Iterable Dataset containing the ExperienceBuffer which will be updated with new experiences during training.
+
+    Args:
+        buffer: replay buffer
+        sample_size: number of experiences to sample at a time
+    """
+
+    def __init__(self, buffer) -> None:
+        self.buffer = buffer
+        self.path_saved = os.path.abspath('saved_games')
+        self.full_paths = [os.path.join(self.path_saved, file) for file in os.listdir(self.path_saved)]
+
+    def __iter__(self):
+        for file_path in self.full_paths:
+            deque_loaded = self.buffer.load_torch(file_path)
+            # states, actions, rewards, dones, new_states = self.buffer.load_torch(file_path)
+            for i in deque_loaded:
+                yield i.state, i.action, i.reward, i.next_state
+
+
 

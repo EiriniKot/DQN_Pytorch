@@ -94,9 +94,7 @@ class DqnAgent:
 
         # Compute the expected Q values
         expected_state_action_values = torch.add(next_state_values * self.gamma, reward_batch)
-
         loss = self.criterion(state_action_values, expected_state_action_values.unsqueeze(1))
-        self.optimizer.zero_grad()
         loss.backward()
 
         # In-place gradient clipping
@@ -106,6 +104,7 @@ class DqnAgent:
 
     def train(self, experience):
         # Optimize the model
+        self.optimizer.zero_grad()
         self.loss_fn(experience)
         self.optimizer.step()
 

@@ -16,7 +16,8 @@ import os
 class GamesRunner:
     def __init__(self, specs, h, w,
                  ram_thres=0.8,
-                 batch=10, capacity=100,
+                 batch=10,
+                 capacity=100,
                  save = False,
                  num_episodes=10):
 
@@ -53,15 +54,17 @@ class GamesRunner:
     def get_init_state(self, env):
         # Initialize the environment and state
         init_state = env.reset()[0]
-        # init_state = np.divide(init_state, 255.)
+        init_state = np.divide(init_state, 255.)
         # BCHW
         init_state = np.transpose(init_state, (2, 0, 1))
         new_shape = (1, 3, 1, self.h, self.w)
         init_state = np.resize(init_state, new_shape)
         init_state = torch.from_numpy(init_state).type(torch.float32)
+
+        # In the first batch we will create 3 empty frames. Since we dont have other info
         empty_states = np.full(shape=(1, 3, 3, self.h, self.w), fill_value=0.)
         empty_states = torch.tensor(empty_states).type(torch.float32)
-        # Init state gets detached because of the missing frames
+
         cat_states = torch.cat((empty_states, init_state), 2)
         del init_state, new_shape, empty_states
         return cat_states
@@ -69,45 +72,38 @@ class GamesRunner:
     def run(self):
         str_info = []
         new_shape = (1, 3, 1, self.h, self.w)
-        # os.mkdir(f'saved_games/{self.run_time}')
         scores = {}
         for env_n, env in self.envs.items():
             print(f'Environment --- {env_n} ---')
             state = self.get_init_state(env)
             scores[env_n] = []
             self.agent.steps_done = 0
+
             for ep in range(self.num_episodes):
                 print(f'Episode number --- {ep} ---')
                 env.reset()
                 sum_reward = 0
 
                 for t in count():
-                    # arr = np.ascontiguousarray(env.render())*256
-                    # img = Image.fromarray(arr, 'RGB')
-                    # img.save(f"out{ep}{t}.png")
-                    #
-                    # print(f'Number of timestep {t}')
-                    # Select and perform an action
-                    # print(state)
                     action = self.agent.policy(state)
                     next_state, reward, done, truncated, info = env.step(action)
                     sum_reward += reward
-
                     # Preprocess
-                    # next_state = np.divide(next_state, 255.)
+                    next_state = np.divide(next_state, 255.)
                     next_state = np.transpose(next_state, (2, 0, 1))
-
                     next_state = np.resize(next_state, new_shape)
                     next_state = torch.from_numpy(next_state).type(torch.float32)
+
+                    # Concat 3 previous + 1 new frame
                     next_state = torch.cat((state[:, :, 1:, :, :], next_state), 2)
 
-                    reward = torch.tensor(reward, device=None).detach()
+                    reward = torch.tensor(reward, device=None)
+                    action = torch.tensor(action, device=None)
 
-                    action = torch.tensor(action, device=None).detach()
                     # Store the transition in memory
                     self.r_buffer.push(state, action, next_state, reward)
 
-                    state = next_state
+                    state = next_state.clone()
 
                     if len(self.r_buffer) >= self.batch and t%self.batch==0:
                         transitions = self.r_buffer.sample(self.batch)
@@ -123,8 +119,8 @@ class GamesRunner:
 
                     # Getting % usage of virtual_memory (3rd field)
                     ram_percentage = psutil.virtual_memory()[2]
+                    print('Ram percentage over threshold', ram_percentage)
                     if ram_percentage > self.ram_thres and self.save:
-                        print('Ram percentage over threshold', ram_percentage)
                         self.r_buffer.save_local(f'saved_games/{ep}_{t}_{env_n}.pt')
                     if self.save!=True:
                         self.r_buffer.memory.clear()
@@ -142,18 +138,16 @@ class GamesRunner:
         metadata = pd.DataFrame(str_info,
                                 columns=['env_name', 'episode', 'number_of_steps'])
         metadata.to_csv('metadata.csv')
-
         return scores
-
 
 
 if __name__ == '__main__':
     f = open('envs.json')
     json_config = json.load(f)
     runner = GamesRunner(json_config,
-                         ram_thres = 70.,
-                         batch =64,
-                         h=180, w=180,
+                         ram_thres=70.,
+                         batch=6,
+                         h=json_config['h_frame'], w=json_config['w_frame'],
                          capacity=None,
                          save=True,
                          num_episodes=100)

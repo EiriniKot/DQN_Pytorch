@@ -3,7 +3,6 @@ import torch.nn.functional as F
 
 
 class DqnNet(nn.Module):
-    @profile
     def __init__(self, h, w, outputs):
         super(DqnNet, self).__init__()
         self.conv1 = nn.Conv3d(3, 16, kernel_size=(1, 3, 3), stride=2)
@@ -33,3 +32,7 @@ class DqnNet(nn.Module):
         x = F.relu(self.bn3(self.conv3(x)))
         x = x.view(x.size(0), -1)
         return F.softmax(self.head(x))
+
+    def save_model(self):
+        raise NotImplementedError('TODO')
+
