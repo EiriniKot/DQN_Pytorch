@@ -100,7 +100,7 @@ class SiamezeTrainer:
             running_loss += float(loss)
 
             if i % 10 == 9:
-                last_loss = running_loss / 100  # loss per batch
+                last_loss = running_loss / 10  # loss per batch
                 print(f'batch {i+1} loss: {round(last_loss,3)}')
                 self.plots(epoch_index, training_loader, i, last_loss)
                 running_loss = 0.
