@@ -5,7 +5,7 @@ from torch.utils.tensorboard import SummaryWriter
 
 
 class Encoder(nn.Module):
-    def __init__(self, h, w, emb_size=200):
+    def __init__(self, h, w, enc_size=200):
         super(Encoder, self).__init__()
         self.conv1 = nn.Conv3d(3, 16, kernel_size=(1, 3, 3), stride=2)
         self.bn1 = nn.BatchNorm3d(16)
@@ -21,13 +21,13 @@ class Encoder(nn.Module):
         convh = conv3d_size_out(conv3d_size_out(conv3d_size_out(h)))
 
         linear_input_size = convw * convh * 32
-        self.head = nn.Linear(linear_input_size, emb_size)
+        self.head = nn.Linear(linear_input_size, enc_size)
 
     def forward(self, state):
         state = F.relu(self.bn1(self.conv1(state)))
         state = F.relu(self.bn2(self.conv2(state)))
         state = F.relu(self.bn3(self.conv3(state)))
-        state = self.head(state.view(state.size(0), -1))
+        state = F.relu(self.head(state.view(state.size(0), -1)))
         return state
 
 
@@ -47,7 +47,7 @@ class Inverse(nn.Module):
     def forward(self, emb0, emb1):
         embed = torch.concat([emb0, emb1], axis=1)
         embed = F.relu(self.lin_1(embed))
-        logits = F.softmax(self.head(embed), dim = 1)
+        logits = F.softmax(self.head(embed), dim=1)
         return logits
 
 
@@ -59,7 +59,7 @@ class SiamezeTrainer:
         self.loss_fn = nn.CrossEntropyLoss()
 
         params = self.chain(*[self.encoder_nn.parameters(), self.inverse_nn.parameters()])
-        self.optimizer = torch.optim.RMSprop(params, lr=0.01)
+        self.optimizer = torch.optim.RMSprop(params, lr=0.001)
 
         if tensorboard:
             self.writer = SummaryWriter()
@@ -99,8 +99,8 @@ class SiamezeTrainer:
             self.optimizer.step()
             running_loss += float(loss)
 
-            if i % 10 == 9:
-                last_loss = running_loss / 10  # loss per batch
+            if i % 100 == 99:
+                last_loss = running_loss / 100  # loss per batch
                 print(f'batch {i+1} loss: {round(last_loss,3)}')
                 self.plots(epoch_index, training_loader, i, last_loss)
                 running_loss = 0.

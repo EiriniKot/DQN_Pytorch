@@ -1,5 +1,9 @@
+import torch
 from torch import nn
 import torch.nn.functional as F
+from src.siameze import Encoder
+from src.action_embeddings import EmbeddingModel
+from src.nn_utils import ModelLoader
 
 
 class DqnNet(nn.Module):
@@ -23,16 +27,48 @@ class DqnNet(nn.Module):
         linear_input_size = convw * convh * 32
         self.head = nn.Linear(linear_input_size, outputs)
 
-    # Called with either one element to determine next action, or a batch
-    # during optimization. Returns tensor([[left0exp,right0exp]...]).
-
     def forward(self, x):
+        print(x.shape)
         x = F.relu(self.bn1(self.conv1(x)))
         x = F.relu(self.bn2(self.conv2(x)))
         x = F.relu(self.bn3(self.conv3(x)))
         x = x.view(x.size(0), -1)
-        return F.softmax(self.head(x))
+        x = F.softmax(self.head(x), dim=1)
+        return x
 
-    def save_model(self):
-        raise NotImplementedError('TODO')
+
+class DqnNetAlternative(nn.Module):
+    def __init__(self,
+                 h, w,
+                 enc_size,
+                 emb_depth,
+                 n_actions):
+
+        super(DqnNetAlternative, self).__init__()
+        encoder = Encoder(h=h, w=w, enc_size=enc_size)
+        embedding = EmbeddingModel(num_embeddings=n_actions, embedding_dim=emb_depth)
+
+        self.enc_load = ModelLoader(path='models_inverse_encoded/checkpoint_0_encoder.pt',
+                                    model_to_load=encoder,
+                                    frozen=False)
+
+        self.embedding_nn = ModelLoader(path='models_action_emb/actions_embedding.pt',
+                                        model_to_load=embedding,
+                                        frozen=False)
+
+        self.lin_0 = nn.Linear(in_features=enc_size, out_features=emb_depth)
+        self.lin_1 = nn.Linear(in_features=emb_depth*n_actions, out_features=emb_depth)
+        self.multihead = nn.MultiheadAttention(embed_dim=emb_depth, num_heads=4, dropout=0.1, batch_first=True)
+        self.head = nn.Linear(emb_depth, n_actions)
+
+    def forward(self, x):
+        x = self.enc_load.predict(x)
+        x = F.relu(self.lin_0(x))
+        emb = self.embedding_nn.model_loaded.emb.weight
+        emb = torch.flatten(emb)
+        emb = torch.unsqueeze(emb, 0).repeat(x.shape[0],1)
+        emb = torch.sigmoid(self.lin_1(emb))
+        x,  _ = self.multihead(emb, x, x, need_weights=False)
+        x = F.softmax(self.head(x), dim=1)
+        return x
 

@@ -16,6 +16,7 @@ class ReplayMemory(object):
         self.memory = deque([], maxlen=capacity)
         self.window_size = window_size
         self.window_step = window_step
+        self.capacity = capacity
 
     def push(self, state, action, next_state, reward):
         """Save a transition"""
@@ -28,10 +29,13 @@ class ReplayMemory(object):
     def __len__(self):
         return len(self.memory)
 
+    def is_full(self):
+        return self.__len__() == self.capacity
+
     def save_local(self, output_name):
         if len(self.memory) > 0:
             torch.save(self.memory, output_name)
-        self.memory.clear()
+            self.memory.clear()
 
     def load_torch(self, directory):
         """
@@ -57,11 +61,13 @@ class ExperienceDataset(IterableDataset):
         self.buffer = buffer
         self.path_saved = os.path.abspath('saved_games')
         self.full_paths = [os.path.join(self.path_saved, file) for file in os.listdir(self.path_saved)]
+        random.shuffle(self.full_paths)
 
     def __iter__(self):
         for file_path in self.full_paths:
             deque_loaded = self.buffer.load_torch(file_path)
             # states, actions, rewards, dones, new_states = self.buffer.load_torch(file_path)
+            random.shuffle(deque_loaded)
             for i in deque_loaded:
                 yield i.state, i.action, i.reward, i.next_state
 

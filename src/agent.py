@@ -1,4 +1,3 @@
-from src.network import DqnNet
 import random
 import math
 import torch
@@ -16,7 +15,7 @@ class DqnAgent:
                  eps_start=0.9,
                  eps_end=0.05,
                  eps_decay=200):
-        assert isinstance(network_obj, DqnNet), "Should pass a instance of a DqnNet"
+
         self.device = device
 
         # Copy both networks into device
@@ -102,11 +101,15 @@ class DqnAgent:
         self.loss_saver.append(float(loss))
         return loss
 
-    def train(self, experience):
+    def train_one_epoch(self, experience):
         # Optimize the model
-        self.optimizer.zero_grad()
+        self.optimizer.zero_grad(set_to_none=True)
         self.loss_fn(experience)
         self.optimizer.step()
+
+    def train(self, experience, epochs =1):
+        for epoch in range(epochs):
+            self.train_one_epoch(experience)
 
     def update_target(self, t):
         # Update the target network, copying all weights and biases in DQN
