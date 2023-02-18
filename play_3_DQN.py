@@ -17,7 +17,7 @@ if __name__ == '__main__':
                          capacity=json_config['replay_capacity'],
                          network=dqn_net,
                          save_buffer=True,
-                         num_episodes=8)
+                         num_episodes=1)
     scores, loss = runner.run()
 
     for game, score in scores.items():

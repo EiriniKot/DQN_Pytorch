@@ -58,17 +58,21 @@ class DqnNetAlternative(nn.Module):
 
         self.lin_0 = nn.Linear(in_features=enc_size, out_features=emb_depth)
         self.lin_1 = nn.Linear(in_features=emb_depth*n_actions, out_features=emb_depth)
-        self.multihead = nn.MultiheadAttention(embed_dim=emb_depth, num_heads=4, dropout=0.1, batch_first=True)
-        self.head = nn.Linear(emb_depth, n_actions)
+        self.multihead = nn.MultiheadAttention(embed_dim=enc_size,
+                                               num_heads=4,
+                                               kdim=emb_depth,
+                                               vdim=emb_depth,
+                                               dropout=0.1,
+                                               batch_first=True)
+        self.head = nn.Linear(enc_size, n_actions)
 
     def forward(self, x):
         x = self.enc_load.predict(x)
-        x = F.relu(self.lin_0(x))
+        x = torch.unsqueeze(x, 1)
         emb = self.embedding_nn.model_loaded.emb.weight
-        emb = torch.flatten(emb)
-        emb = torch.unsqueeze(emb, 0).repeat(x.shape[0],1)
-        emb = torch.sigmoid(self.lin_1(emb))
-        x,  _ = self.multihead(emb, x, x, need_weights=False)
-        x = F.softmax(self.head(x), dim=1)
+        emb = torch.unsqueeze(emb, 0).repeat(x.shape[0],1,1)
+        x,  _ = self.multihead(x, emb, emb, need_weights=False)
+        x = F.softmax(torch.squeeze(self.head(x), dim=1),
+                      dim=1)
         return x
 
