@@ -12,6 +12,7 @@ class DqnAgent:
                  optimizer='RMSprop',
                  target_freq = 15,
                  gamma=0.99,
+                 lr=0.001,
                  eps_start=0.9,
                  eps_end=0.05,
                  eps_decay=200):
@@ -27,8 +28,8 @@ class DqnAgent:
 
         # Disables grad eval
         self.target_net.eval()
-
-        self.optimizer = getattr(optim, optimizer)(self.policy_net.parameters())
+        self.optimizer = getattr(optim, optimizer)(params=self.policy_net.parameters(),
+                                                   lr = lr)
 
         self.gamma = gamma
         self.n_actions = n_actions
@@ -43,7 +44,7 @@ class DqnAgent:
         self.loss_saver = []
         # Compute Huber loss
         # self.criterion = nn.SmoothL1Loss()
-        self.criterion = nn.KLDivLoss()
+        self.criterion = nn.MSELoss()
 
     def policy(self, state):
         """
@@ -93,11 +94,12 @@ class DqnAgent:
 
         # Compute the expected Q values
         expected_state_action_values = torch.add(next_state_values * self.gamma, reward_batch)
+
         loss = self.criterion(state_action_values, expected_state_action_values.unsqueeze(1))
         loss.backward()
 
         # In-place gradient clipping
-        torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 80)
+        torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 180)
         self.loss_saver.append(float(loss))
         return loss
 
