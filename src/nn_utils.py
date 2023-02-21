@@ -6,8 +6,16 @@ from src.agent import DqnAgent
 from src.buffer import ReplayMemory, Transition
 from itertools import count
 
+
 class ModelLoader:
     def __init__(self, path, model_to_load, frozen=True):
+        """
+        This class is created in order to load pretrained models and reuse them or/and finetune them.
+        :param path: Path like .pt file
+        :param model_to_load: Instance of a class for the model.
+        :param frozen: bool, By frozen == True all the layers will be frozen
+        and no backpropagation will be applied on them
+        """
         self.model_loaded = model_to_load
         self.model_loaded.load_state_dict(torch.load(path)['model_state_dict'])
         if frozen:
@@ -123,12 +131,11 @@ class GamesRunner:
                         experience = Transition(*zip(*transitions))
 
                         # Perform one step of the optimization (on the policy network)
-                        self.agent.train(experience, epochs = 5)
+                        self.agent.train(experience, epochs=5)
                         self.agent.update_target(t)
 
                         if self.save_buffer:
                             self.r_buffer.save_local(f'saved_games/{ep}_{t}_{env_n}.pt')
-
                         else:
                             self.r_buffer.memory.clear()
 
@@ -140,6 +147,6 @@ class GamesRunner:
 
                 del state
                 scores[env_n].append(float(sum_reward))
-                print(f'reward  :  {sum_reward} --- loss  : {self.agent.loss_saver[-1]}')
+                print(f'reward  :  {sum_reward} --- loss  : {round(self.agent.loss_saver[-1],3)}')
 
         return scores, self.agent.loss_saver
