@@ -3,7 +3,7 @@
                 "ChopperCommandDeterministic-v4",
                 "BerzerkDeterministic-v4"],
   "optimizer": "AdamW",
-  "max_iterations_ep": 400,
+  "max_iterations_ep": 100,
   "h_frame": 200,
   "w_frame": 200,
   "n_actions": 18,
