@@ -120,11 +120,14 @@ class GamesRunner:
                     next_state = torch.cat((state[:, :, 1:, :, :], next_state), 2)
                     reward = torch.tensor(reward)
 
+                    state.to(self.device)
+                    action.to(self.device)
+                    next_state.to(self.device)
+                    reward.to(self.device)
+
+                    print('To ',self.device)
                     # Store the transition in memory
-                    self.r_buffer.push(state.to(self.device),
-                                       action.to(self.device),
-                                       next_state.to(self.device),
-                                       reward.to(self.device))
+                    self.r_buffer.push(state, action, next_state, reward)
 
                     del state, reward, action
 
