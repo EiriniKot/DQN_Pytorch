@@ -9,11 +9,11 @@ from src.nn_utils import ModelLoader
 class DqnNet(nn.Module):
     def __init__(self, h, w, outputs):
         super(DqnNet, self).__init__()
-        self.conv1 = nn.Conv3d(3, 16, kernel_size=(1, 3, 3), stride=2)
-        self.bn1 = nn.BatchNorm3d(16)
-        self.conv2 = nn.Conv3d(16, 32, kernel_size=(1, 3, 3), stride=2)
-        self.bn2 = nn.BatchNorm3d(32)
-        self.conv3 = nn.Conv3d(32, 32, kernel_size=(1, 3, 3), stride=2)
+        self.conv1 = nn.Conv3d(3, 32, kernel_size=(1, 3, 3), stride=2)
+        self.bn1 = nn.BatchNorm3d(32)
+        self.conv2 = nn.Conv3d(32, 64, kernel_size=(1, 3, 3), stride=2)
+        self.bn2 = nn.BatchNorm3d(64)
+        self.conv3 = nn.Conv3d(64, 32, kernel_size=(1, 3, 3), stride=2)
         self.bn3 = nn.BatchNorm3d(32)
         # Number of Linear input connections depends on output of conv2d layers
         # and therefore the input image size, so compute it.

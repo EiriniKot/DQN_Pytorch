@@ -14,6 +14,7 @@ if __name__ == '__main__':
                          envs = json_config['train_envs'],
                          h=json_config['h_frame'],
                          w=json_config['w_frame'],
+                         max_iterations_ep=json_config['max_iterations_ep'],
                          capacity=json_config['replay_capacity'],
                          network=dqn_net,
                          save_buffer=True,

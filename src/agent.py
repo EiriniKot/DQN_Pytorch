@@ -43,8 +43,8 @@ class DqnAgent:
 
         self.loss_saver = []
         # Compute Huber loss
-        # self.criterion = nn.SmoothL1Loss()
-        self.criterion = nn.MSELoss()
+        self.criterion = nn.SmoothL1Loss()
+        # self.criterion = nn.MSELoss()
 
     def policy(self, state):
         """
@@ -99,7 +99,7 @@ class DqnAgent:
         loss.backward()
 
         # In-place gradient clipping
-        torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 180)
+        torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 60)
         self.loss_saver.append(float(loss))
         return loss
 

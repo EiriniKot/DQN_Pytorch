@@ -33,6 +33,7 @@ class GamesRunner:
                  batch=10,
                  envs = [],
                  capacity=100,
+                 max_iterations_ep=2000,
                  save_buffer=False,
                  network=None,
                  num_episodes=10):
@@ -52,6 +53,8 @@ class GamesRunner:
         self.window_size = specs['sampling']['window_size']
 
         self.num_episodes = num_episodes
+        self.max_iterations_ep = max_iterations_ep
+
         self.r_buffer = ReplayMemory(self.capacity,
                                      window_size=specs['sampling']['window_size'],
                                      window_step=specs['sampling']['window_step'])
@@ -115,11 +118,14 @@ class GamesRunner:
 
                     # Concat 3 previous + 1 new frame
                     next_state = torch.cat((state[:, :, 1:, :, :], next_state), 2)
-
-                    reward = torch.tensor(reward, device=None)
+                    reward = torch.tensor(reward)
 
                     # Store the transition in memory
-                    self.r_buffer.push(state, action, next_state, reward)
+                    self.r_buffer.push(state.to(self.device),
+                                       action.to(self.device),
+                                       next_state.to(self.device),
+                                       reward.to(self.device))
+
                     del state, reward, action
 
                     state = next_state.clone()
@@ -141,12 +147,13 @@ class GamesRunner:
 
                         del transitions, experience
 
-                    if done:
-                        print('Episode ended \n')
+                    reason_to_stop = t >= self.max_iterations_ep and sum_reward==0
+                    if done or reason_to_stop:
+                        print(f'Episode ended at {t}')
                         break
 
                 del state
                 scores[env_n].append(float(sum_reward))
-                print(f'reward  :  {sum_reward} --- loss  : {round(self.agent.loss_saver[-1],3)}')
+                print(f'Reward  :  {sum_reward} --- and last loss  : {self.agent.loss_saver[-1]}\n')
 
         return scores, self.agent.loss_saver
