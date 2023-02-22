@@ -28,11 +28,8 @@ class DqnNet(nn.Module):
         self.head = nn.Linear(linear_input_size, outputs)
 
     def forward(self, x):
-        print('1')
         x = F.relu(self.bn1(self.conv1(x)))
-        print('2')
         x = F.relu(self.bn2(self.conv2(x)))
-        print('3')
         x = F.relu(self.bn3(self.conv3(x)))
         x = x.view(x.size(0), -1)
         x = F.softmax(self.head(x), dim=1)

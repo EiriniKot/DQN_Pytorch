@@ -30,7 +30,7 @@ class DqnAgent:
 
         # Disables grad eval
         self.target_net.eval()
-        self.optimizer = getattr(optim, optimizer)(params=self.policy_net.parameters(),lr=lr, amsgrad=True)
+        self.optimizer = getattr(optim, optimizer)(params=self.policy_net.parameters(), lr=lr, amsgrad=True)
 
         self.gamma = gamma
         self.n_actions = n_actions
@@ -102,6 +102,8 @@ class DqnAgent:
 
         # In-place gradient clipping
         torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 100)
+
+        self.loss_saver.append(float(loss))
         return loss
 
     def train_one_epoch(self, experience):
