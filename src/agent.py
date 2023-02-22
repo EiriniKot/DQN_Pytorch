@@ -78,8 +78,8 @@ class DqnAgent:
         non_final_next_states = torch.cat([s for s in experience.next_state
                                            if s is not None], 0)
         state_batch = torch.cat(experience.state, 0).to(self.device)
-        action_batch = torch.cat(experience.action, 0)
-        reward_batch = torch.stack(experience.reward, 0)
+        action_batch = torch.cat(experience.action, 0).to(self.device)
+        reward_batch = torch.stack(experience.reward, 0).to(self.device)
 
         # state_batch = ['s1, s2, s3, s4' -> values for a4]
         out = self.policy_net(state_batch)
