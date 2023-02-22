@@ -61,6 +61,7 @@ class GamesRunner:
 
         if network:
             self.network_obj = network
+            self.network_obj.to(self.device)
         else:
             raise Exception('Please Pass the DQN network')
 
