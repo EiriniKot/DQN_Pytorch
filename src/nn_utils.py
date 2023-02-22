@@ -5,6 +5,7 @@ import torch
 from src.agent import DqnAgent
 from src.buffer import ReplayMemory, Transition
 from itertools import count
+import datetime
 
 
 class ModelLoader:
@@ -38,7 +39,7 @@ class GamesRunner:
                  save_buffer=False,
                  p_net=None,
                  t_net=None,
-                 device = torch.device("cuda" if torch.cuda.is_available() else "cpu"),
+                 device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
                  num_episodes=10):
 
         self.envs = {}
@@ -144,7 +145,8 @@ class GamesRunner:
                         self.agent.soft_update(self.p_network, self.t_network, tau=self.tau)
 
                         if self.save_buffer:
-                            self.r_buffer.save_local(f'saved_games/{ep}_{t}_{env_n}.pt')
+                            add_unix_time = datetime.datetime.now().strftime('%s')
+                            self.r_buffer.save_local(f'saved_games/{ep}_{t}_{add_unix_time}_{env_n}.pt')
                         else:
                             self.r_buffer.memory.clear()
 
