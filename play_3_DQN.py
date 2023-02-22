@@ -7,8 +7,6 @@ from src.nn_utils import GamesRunner
 if __name__ == '__main__':
     f = open('envs.json')
     json_config = json.load(f)
-    dqn_net = DqnNet(h=json_config['h_frame'], w=json_config['w_frame'], outputs=json_config['n_actions'])
-
     policy_net = DqnNet(h=json_config['h_frame'], w=json_config['w_frame'], outputs=json_config['n_actions'])
     target_net = DqnNet(h=json_config['h_frame'], w=json_config['w_frame'], outputs=json_config['n_actions'])
     target_net.load_state_dict(policy_net.state_dict())

@@ -2,7 +2,7 @@
   "train_envs":["BankHeistDeterministic-v4",
                 "ChopperCommandDeterministic-v4",
                 "BerzerkDeterministic-v4"],
-  "optimizer": "RMSprop",
+  "optimizer": "AdamW",
   "max_iterations_ep": 400,
   "h_frame": 200,
   "w_frame": 200,

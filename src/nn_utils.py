@@ -35,8 +35,8 @@ class GamesRunner:
                  capacity=100,
                  max_iterations_ep=2000,
                  save_buffer=False,
-                 p_network=None,
-                 t_network=None,
+                 p_net=None,
+                 t_net=None,
                  device = torch.device("cuda" if torch.cuda.is_available() else "cpu"),
                  num_episodes=10):
 
@@ -61,8 +61,8 @@ class GamesRunner:
                                      window_size=specs['sampling']['window_size'],
                                      window_step=specs['sampling']['window_step'])
 
-        self.p_network = p_network
-        self.t_network = t_network
+        self.p_network = p_net
+        self.t_network = t_net
 
         self.agent = DqnAgent(self.p_network,
                               self.t_network,
@@ -81,7 +81,7 @@ class GamesRunner:
         init_state = np.transpose(init_state, (2, 0, 1))
         new_shape = (1, 3, 1, self.h, self.w)
         init_state = np.resize(init_state, new_shape)
-        init_state = torch.from_numpy(init_state, device = self.device).type(torch.float32)
+        init_state = torch.from_numpy(init_state).type(torch.float32).to(self.device)
 
         # In the first batch we will create 3 empty frames. Since we dont have other info
         empty_states = np.full(shape=(1, 3, 3, self.h, self.w), fill_value=0.)
@@ -115,7 +115,7 @@ class GamesRunner:
                     next_state = np.divide(next_state, 255.)
                     next_state = np.transpose(next_state, (2, 0, 1))
                     next_state = np.resize(next_state, new_shape)
-                    next_state = torch.from_numpy(next_state, device = self.device).type(torch.float32)
+                    next_state = torch.from_numpy(next_state).type(torch.float32).to(self.device)
 
                     # Concat 3 previous + 1 new frame
                     next_state = torch.cat((state[:, :, 1:, :, :], next_state), 2)
