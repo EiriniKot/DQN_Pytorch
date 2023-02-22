@@ -12,7 +12,6 @@ class DqnAgent:
                  n_actions,
                  device,
                  optimizer='RMSprop',
-                 target_freq = 15,
                  gamma=0.99,
                  lr=0.001,
                  eps_start=0.9,
@@ -25,8 +24,6 @@ class DqnAgent:
         self.policy_net = p_net.to(device)
         self.target_net = t_net.to(device)
         # self.target_net.load_state_dict(self.policy_net.state_dict())
-
-        self.target_freq = target_freq
 
         # Disables grad eval
         self.target_net.eval()
@@ -120,6 +117,11 @@ class DqnAgent:
         # Update the target network, copying all weights and biases in DQN
         if t % self.target_freq == 0:
             self.target_net.load_state_dict(self.policy_net.state_dict())
+
+    def soft_update(self, local_model, target_model, tau):
+        for target_param, local_param in zip(target_model.parameters(), local_model.parameters()):
+            target_param.data.copy_(tau * local_param.data + (1.0 - tau) * target_param.data)
+
 
 
 

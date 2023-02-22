@@ -33,6 +33,7 @@ class GamesRunner:
                  batch=10,
                  envs = [],
                  capacity=100,
+                 tau = 0.001,
                  max_iterations_ep=2000,
                  save_buffer=False,
                  p_net=None,
@@ -47,6 +48,7 @@ class GamesRunner:
 
         self.h = h
         self.w = w
+        self.tau = tau
         self.batch =batch
         self.save_buffer = save_buffer
 
@@ -67,7 +69,6 @@ class GamesRunner:
         self.agent = DqnAgent(self.p_network,
                               self.t_network,
                               n_actions=n_actions,
-                              target_freq=specs['target_freq'],
                               device=self.device,
                               optimizer=specs['optimizer'], **specs['policy_specs'])
         self.run_time = str(time.time())
@@ -140,7 +141,7 @@ class GamesRunner:
 
                         # Perform one step of the optimization (on the policy network)
                         self.agent.train(experience, epochs=5)
-                        self.agent.update_target(t)
+                        self.agent.soft_update(self.p_network, self.t_network, tau=self.tau)
 
                         if self.save_buffer:
                             self.r_buffer.save_local(f'saved_games/{ep}_{t}_{env_n}.pt')
