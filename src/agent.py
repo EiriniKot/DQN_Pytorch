@@ -6,7 +6,9 @@ import torch.optim as optim
 
 
 class DqnAgent:
-    def __init__(self, network_obj,
+    def __init__(self,
+                 p_net,
+                 t_net,
                  n_actions,
                  device,
                  optimizer='RMSprop',
@@ -20,16 +22,15 @@ class DqnAgent:
         self.device = device
 
         # Copy both networks into device
-        self.policy_net = network_obj.to(device)
-        self.target_net = network_obj.to(device)
-        self.target_net.load_state_dict(self.policy_net.state_dict())
+        self.policy_net = p_net.to(device)
+        self.target_net = t_net.to(device)
+        # self.target_net.load_state_dict(self.policy_net.state_dict())
 
         self.target_freq = target_freq
 
         # Disables grad eval
         self.target_net.eval()
-        self.optimizer = getattr(optim, optimizer)(params=self.policy_net.parameters(),
-                                                   lr = lr)
+        self.optimizer = getattr(optim, optimizer)(params=self.policy_net.parameters(),lr=lr, amsgrad=True)
 
         self.gamma = gamma
         self.n_actions = n_actions
@@ -44,7 +45,6 @@ class DqnAgent:
         self.loss_saver = []
         # Compute Huber loss
         self.criterion = nn.SmoothL1Loss()
-        # self.criterion = nn.MSELoss()
 
     def policy(self, state):
         """
@@ -76,7 +76,7 @@ class DqnAgent:
         non_final_mask = torch.tensor(tuple(map(lambda s: s is not None,
                                                 experience.next_state)), device=self.device, dtype=torch.bool)
         non_final_next_states = torch.cat([s for s in experience.next_state
-                                           if s is not None], 0)
+                                           if s is not None], 0).to(self.device)
         state_batch = torch.cat(experience.state, 0).to(self.device)
         action_batch = torch.cat(experience.action, 0).to(self.device)
         reward_batch = torch.stack(experience.reward, 0).to(self.device)
@@ -87,7 +87,7 @@ class DqnAgent:
 
         state_action_values = torch.gather(out, 1, index=(action_batch.unsqueeze(1)))
         # State a values are the values that the network predicted for this state action pair
-        next_state_values = torch.zeros(len(experience.state))
+        next_state_values = torch.zeros(len(experience.state), device = self.device)
 
         with torch.no_grad():
             next_state_values[non_final_mask] = self.target_net(non_final_next_states).max(1)[0]
@@ -96,16 +96,17 @@ class DqnAgent:
         expected_state_action_values = torch.add(next_state_values * self.gamma, reward_batch)
 
         loss = self.criterion(state_action_values, expected_state_action_values.unsqueeze(1))
+
+        self.optimizer.zero_grad()
         loss.backward()
 
         # In-place gradient clipping
-        torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 60)
-        self.loss_saver.append(float(loss))
+        torch.nn.utils.clip_grad_value_(self.policy_net.parameters(), 100)
         return loss
 
     def train_one_epoch(self, experience):
         # Optimize the model
-        self.optimizer.zero_grad(set_to_none=True)
+        # self.optimizer.zero_grad()
         self.loss_fn(experience)
         self.optimizer.step()
 

@@ -35,7 +35,9 @@ class GamesRunner:
                  capacity=100,
                  max_iterations_ep=2000,
                  save_buffer=False,
-                 network=None,
+                 p_network=None,
+                 t_network=None,
+                 device = torch.device("cuda" if torch.cuda.is_available() else "cpu"),
                  num_episodes=10):
 
         self.envs = {}
@@ -48,7 +50,7 @@ class GamesRunner:
         self.batch =batch
         self.save_buffer = save_buffer
 
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = device
         self.capacity = capacity
         self.window_size = specs['sampling']['window_size']
 
@@ -59,13 +61,11 @@ class GamesRunner:
                                      window_size=specs['sampling']['window_size'],
                                      window_step=specs['sampling']['window_step'])
 
-        if network:
-            self.network_obj = network
-            self.network_obj.to(self.device)
-        else:
-            raise Exception('Please Pass the DQN network')
+        self.p_network = p_network
+        self.t_network = t_network
 
-        self.agent = DqnAgent(self.network_obj,
+        self.agent = DqnAgent(self.p_network,
+                              self.t_network,
                               n_actions=n_actions,
                               target_freq=specs['target_freq'],
                               device=self.device,
@@ -81,14 +81,14 @@ class GamesRunner:
         init_state = np.transpose(init_state, (2, 0, 1))
         new_shape = (1, 3, 1, self.h, self.w)
         init_state = np.resize(init_state, new_shape)
-        init_state = torch.from_numpy(init_state).type(torch.float32)
+        init_state = torch.from_numpy(init_state, device = self.device).type(torch.float32)
 
         # In the first batch we will create 3 empty frames. Since we dont have other info
         empty_states = np.full(shape=(1, 3, 3, self.h, self.w), fill_value=0.)
-        empty_states = torch.tensor(empty_states).type(torch.float32)
+        empty_states = torch.tensor(empty_states, device=self.device).type(torch.float32)
 
         cat_states = torch.cat((empty_states, init_state), 2)
-        del init_state, new_shape, empty_states
+        # del init_state, new_shape, empty_states
         return cat_states
 
     def run(self):
@@ -115,18 +115,16 @@ class GamesRunner:
                     next_state = np.divide(next_state, 255.)
                     next_state = np.transpose(next_state, (2, 0, 1))
                     next_state = np.resize(next_state, new_shape)
-                    next_state = torch.from_numpy(next_state).type(torch.float32)
+                    next_state = torch.from_numpy(next_state, device = self.device).type(torch.float32)
 
                     # Concat 3 previous + 1 new frame
                     next_state = torch.cat((state[:, :, 1:, :, :], next_state), 2)
-                    reward = torch.tensor(reward)
+                    reward = torch.tensor(reward, device=self.device)
 
                     state.to(self.device)
                     action.to(self.device)
                     next_state.to(self.device)
-                    reward.to(self.device)
 
-                    print('To ',self.device)
                     # Store the transition in memory
                     self.r_buffer.push(state, action, next_state, reward)
 
