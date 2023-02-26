@@ -12,11 +12,12 @@ class ReplayMemory(object):
     In order to collect and reuse samples while playing a game
     we need to have a Replay Buffer Object which
     """
-    def __init__(self, capacity, window_size=1, window_step=1):
+    def __init__(self, capacity, window_size=1, window_step=1, device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')):
         self.memory = deque([], maxlen=capacity)
         self.window_size = window_size
         self.window_step = window_step
         self.capacity = capacity
+        self.device = device
 
     def push(self, state, action, next_state, reward):
         """Save a transition"""
@@ -45,7 +46,7 @@ class ReplayMemory(object):
                                               or a string or os.PathLike object containing a file name
         :return: torch.tensor
         """
-        read_tensor = torch.load(directory)
+        read_tensor = torch.load(directory, map_location=self.device)
         return read_tensor
 
 
