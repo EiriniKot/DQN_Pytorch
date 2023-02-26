@@ -80,7 +80,8 @@ class SiamezeTrainer:
 
         for i, data in enumerate(training_loader):
             # Every data instance is an input + label pair
-            state, action, _, next_state = data
+            state, action, d, next_state = data
+            d.detach()
             action = F.one_hot(action, num_classes=18).double()
 
             # Zero your gradients for every batch!
@@ -102,8 +103,11 @@ class SiamezeTrainer:
             if i % 100 == 99:
                 last_loss = running_loss / 100  # loss per batch
                 print(f'batch {i+1} loss: {round(last_loss,3)}')
-                self.plots(epoch_index, training_loader, i, last_loss)
+                # self.plots(epoch_index, training_loader, i, last_loss)
                 running_loss = 0.
+
+            data.detach()
+            del action, next_state, state
         return last_loss
 
     def no_plots(self, *args, **kwargs):

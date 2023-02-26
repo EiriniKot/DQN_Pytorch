@@ -67,7 +67,6 @@ class ExperienceDataset(IterableDataset):
     def __iter__(self):
         for file_path in self.full_paths:
             deque_loaded = self.buffer.load_torch(file_path)
-            # states, actions, rewards, dones, new_states = self.buffer.load_torch(file_path)
             random.shuffle(deque_loaded)
             for i in deque_loaded:
                 yield i.state, i.action, i.reward, i.next_state
