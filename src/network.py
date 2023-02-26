@@ -32,7 +32,8 @@ class DqnNet(nn.Module):
         x = F.relu(self.bn2(self.conv2(x)))
         x = F.relu(self.bn3(self.conv3(x)))
         x = x.view(x.size(0), -1)
-        x = F.softmax(self.head(x), dim=1)
+        x = self.head(x)
+        x = F.softmax(x, dim=1)
         return x
 
 

@@ -57,9 +57,9 @@ class ExperienceDataset(IterableDataset):
         sample_size: number of experiences to sample at a time
     """
 
-    def __init__(self, buffer) -> None:
+    def __init__(self, buffer, path_folder=os.path.abspath('saved_games')) -> None:
         self.buffer = buffer
-        self.path_saved = os.path.abspath('saved_games')
+        self.path_saved = path_folder
         self.full_paths = [os.path.join(self.path_saved, file) for file in os.listdir(self.path_saved)]
         random.shuffle(self.full_paths)
 
