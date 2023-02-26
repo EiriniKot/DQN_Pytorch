@@ -106,7 +106,6 @@ class SiamezeTrainer:
                 # self.plots(epoch_index, training_loader, i, last_loss)
                 running_loss = 0.
 
-            data.detach()
             del action, next_state, state
         return last_loss
 
