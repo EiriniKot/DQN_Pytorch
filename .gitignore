@@ -1,4 +1,5 @@
-/models_action_emb
-/models_dqn
-/models_inverse_encoded
 /saved_games
+/models
+__pycache__
+/__pycache__
+
