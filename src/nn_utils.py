@@ -145,7 +145,6 @@ class GamesRunner:
                         self.agent.soft_update(self.p_network, self.t_network, tau=self.tau)
 
                         if self.save_buffer:
-                            # add_unix_time = datetime.datetime.now().strftime('%s')
                             add_unix_time = str(int(time.mktime(datetime.datetime.now().timetuple())))
                             self.r_buffer.save_local(f'saved_games/{ep}_{t}_{add_unix_time}_{env_n}.pt')
                         else:
