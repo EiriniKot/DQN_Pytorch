@@ -18,7 +18,6 @@ class EmbeddingModel(nn.Module):
         torch.save({'model_state_dict': self.state_dict()}, os.path.join('models_action_emb', model_name))
 
 
-
 class Forward(nn.Module):
     def __init__(self):
         super(Forward, self).__init__()
@@ -60,9 +59,13 @@ class ActionEmbTrainer:
                         training_loader,
                         training_batch = 1):
         last_loss = 0.
+        self.optimizer.zero_grad(set_to_none=True)
 
         for i, data in enumerate(training_loader):
             # Every data instance is an input + label pair
+            if i+1 % training_batch == 0:
+                # Zero your gradients for every batch!
+                self.optimizer.zero_grad()
             state, action, d, next_state = data
             d.detach()
 
@@ -72,8 +75,6 @@ class ActionEmbTrainer:
             next_state_out = self.encoder_nn.predict(next_state)
 
             if i+1 % training_batch == 0:
-                # Zero your gradients for every batch!
-                self.optimizer.zero_grad()
                 # Compute the loss and its gradients
                 loss = self.loss_fn(next_state_pred, next_state_out)
                 # Gather data and report
