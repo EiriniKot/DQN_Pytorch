@@ -10,27 +10,26 @@ class DqnNet(nn.Module):
     def __init__(self, h, w, outputs):
         super(DqnNet, self).__init__()
         self.conv1 = nn.Conv3d(3, 32, kernel_size=(1, 3, 3), stride=2)
-        self.bn1 = nn.BatchNorm3d(32)
+        self.maxpool1 = nn.MaxPool3d(kernel_size=(1,2,2), stride=1)
         self.conv2 = nn.Conv3d(32, 64, kernel_size=(1, 3, 3), stride=2)
-        self.bn2 = nn.BatchNorm3d(64)
+        self.maxpool2 = nn.MaxPool3d(kernel_size=(1,2,2), stride=1)
         self.conv3 = nn.Conv3d(64, 32, kernel_size=(1, 3, 3), stride=2)
-        self.bn3 = nn.BatchNorm3d(32)
         # Number of Linear input connections depends on output of conv2d layers
         # and therefore the input image size, so compute it.
 
         def conv3d_size_out(size, kernel_size=3, stride=2):
             return (size - (kernel_size - 1) - 1) // stride + 1
 
-        convw = conv3d_size_out(conv3d_size_out(conv3d_size_out(w)))
-        convh = conv3d_size_out(conv3d_size_out(conv3d_size_out(h)))
+        convw = conv3d_size_out(conv3d_size_out(conv3d_size_out(conv3d_size_out(w))),kernel_size=2,stride=1)
+        convh = conv3d_size_out(conv3d_size_out(conv3d_size_out(conv3d_size_out(h))),kernel_size=2,stride=1)
 
         linear_input_size = convw * convh * 32
         self.head = nn.Linear(linear_input_size, outputs)
 
     def forward(self, x):
-        x = F.relu(self.bn1(self.conv1(x)))
-        x = F.relu(self.bn2(self.conv2(x)))
-        x = F.relu(self.bn3(self.conv3(x)))
+        x = self.maxpool1(F.relu(self.conv1(x)))
+        x = self.maxpool2(F.relu(self.conv2(x)))
+        x = F.relu(self.conv3(x))
         x = x.view(x.size(0), -1)
         x = self.head(x)
         x = F.softmax(x, dim=1)

@@ -14,10 +14,10 @@ if __name__ == '__main__':
 
     runner = GamesRunner(json_config,
                          batch=json_config['batch_size'],
-                         envs = json_config['train_envs'],
+                         envs=json_config['train_envs'],
                          h=json_config['h_frame'],
                          w=json_config['w_frame'],
-                         tau = json_config['tau'],
+                         tau=json_config['tau'],
                          max_iterations_ep=json_config['max_iterations_ep'],
                          capacity=json_config['replay_capacity'],
                          device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
@@ -25,6 +25,7 @@ if __name__ == '__main__':
                          t_net=target_net,
                          save_buffer=True,
                          num_episodes=100)
+
     scores, loss = runner.run()
 
     for game, score in scores.items():
