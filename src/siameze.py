@@ -74,8 +74,8 @@ class SiamezeTrainer:
 
     def train_one_epoch(self,
                         epoch_index,
-                        training_loader):
-        running_loss = 0.
+                        training_loader,
+                        training_batch = 1):
         last_loss = 0.
 
         for i, data in enumerate(training_loader):
@@ -83,28 +83,24 @@ class SiamezeTrainer:
             state, action, d, next_state = data
             d.detach()
             action = F.one_hot(action, num_classes=18).double()
-
-            # Zero your gradients for every batch!
-            self.optimizer.zero_grad()
-
             emb_0 = self.encoder_nn(state)
             emb_1 = self.encoder_nn(next_state)
             logits = self.inverse_nn(emb_0, emb_1)
-            # Compute the loss and its gradients
-            loss = self.loss_fn(logits, action)
 
-            # Gather data and report
-            loss.backward()
+            if i+1 % training_batch == 0:
+                # Zero your gradients for every batch!
+                self.optimizer.zero_grad()
 
-            # Adjust learning weights
-            self.optimizer.step()
-            running_loss += float(loss)
+                # Compute the loss and its gradients
+                loss = self.loss_fn(logits, action)
+                # Gather data and report
+                loss.backward()
+                # Adjust learning weights
+                self.optimizer.step()
 
-            if i % 100 == 99:
-                last_loss = running_loss / 100  # loss per batch
+                last_loss = float(loss) / training_batch  # loss per batch
                 print(f'batch {i+1} loss: {round(last_loss,3)}')
                 # self.plots(epoch_index, training_loader, i, last_loss)
-                running_loss = 0.
 
             del action, next_state, state
         return last_loss

@@ -42,17 +42,20 @@ class DqnNetAlternative(nn.Module):
                  h, w,
                  enc_size,
                  emb_depth,
-                 n_actions):
+                 n_actions,
+                 encoder_path='models_inverse_encoded/encoder.pt',
+                 embed_path='models_action_emb/actions_embedding.pt'
+                 ):
 
         super(DqnNetAlternative, self).__init__()
         encoder = Encoder(h=h, w=w, enc_size=enc_size)
         embedding = EmbeddingModel(num_embeddings=n_actions, embedding_dim=emb_depth)
 
-        self.enc_load = ModelLoader(path='models_inverse_encoded/checkpoint_0_encoder.pt',
+        self.enc_load = ModelLoader(path=encoder_path,
                                     model_to_load=encoder,
                                     frozen=False)
 
-        self.embedding_nn = ModelLoader(path='models_action_emb/actions_embedding.pt',
+        self.embedding_nn = ModelLoader(path=embed_path,
                                         model_to_load=embedding,
                                         frozen=False)
 

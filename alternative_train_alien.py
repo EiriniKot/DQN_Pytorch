@@ -11,7 +11,9 @@ if __name__ == '__main__':
                                 w=json_config['w_frame'],
                                 enc_size=json_config['enc_size'],
                                 emb_depth=json_config['emb_depth'],
-                                n_actions=json_config['n_actions'])
+                                n_actions=json_config['n_actions'],
+                                encoder_path='models_inverse_encoded/encoder.pt',
+                                embed_path='models_action_emb/actions_embedding.pt')
 
     runner = GamesRunner(json_config,
                          batch=json_config['batch_size'],
