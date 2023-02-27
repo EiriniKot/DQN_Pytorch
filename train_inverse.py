@@ -7,10 +7,6 @@ from src.siameze import SiamezeTrainer, Encoder, Inverse
 f = open('envs.json')
 json_config = json.load(f)
 
-# You need to keep the same settings
-buffer = ReplayMemory(capacity=None, **json_config['sampling'])
-dt_iter = ExperienceDataset(buffer)
-
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 encoder = Encoder(h=json_config['h_frame'],
@@ -22,7 +18,7 @@ trainer = SiamezeTrainer(encoder, inverse, tensorboard=False)
 
 models_save = os.path.join(os.getcwd(), 'models')
 
-buffer = ReplayMemory(capacity=json_config['replay_capacity'], device = device, **json_config['sampling'])
+buffer = ReplayMemory(capacity=json_config['replay_capacity'], device=device, **json_config['sampling'])
 dt_iter = ExperienceDataset(buffer, path_folder='/saved_games')
 
 for epoch_indx in range(1):
