@@ -29,6 +29,6 @@ models_save = '/home/eirini/PycharmProjects/DQN_Pytorch/models_inverse_encoded'
 
 for epoch_indx in range(2):
     dt_iter = ExperienceDataset(buffer)
-    last_loss = trainer.train_one_epoch(epoch_indx, dt_iter)
+    last_loss = trainer.train_one_epoch(epoch_indx, dt_iter, training_batch = 1)
 
 embedding.store('actions_embedding.pt')

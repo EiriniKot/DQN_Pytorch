@@ -57,38 +57,31 @@ class ActionEmbTrainer:
 
     def train_one_epoch(self,
                         epoch_index,
-                        training_loader):
-        running_loss = 0.
+                        training_loader,
+                        training_batch = 1):
         last_loss = 0.
 
         for i, data in enumerate(training_loader):
             # Every data instance is an input + label pair
-            state, action, _, next_state = data
-
-            # Zero your gradients for every batch!
-            self.optimizer.zero_grad()
+            state, action, d, next_state = data
+            d.detach()
 
             enc_state = self.encoder_nn.predict(state)
-
             embed_a = self.embedding(action)
             next_state_pred = self.forward(embed_a, enc_state)
-
-            # Compute the loss and its gradients
             next_state_out = self.encoder_nn.predict(next_state)
-            loss = self.loss_fn(next_state_pred, next_state_out)
 
-            # Gather data and report
-            loss.backward()
-
-            # Adjust learning weights
-            self.optimizer.step()
-            running_loss += float(loss)
-
-            if i % 100 == 99:
-                last_loss = running_loss / 100  # loss per batch
-                print(f'batch {i + 1} loss: {round(last_loss, 3)}')
-                self.plots(epoch_index, training_loader, i, last_loss)
-                running_loss = 0.
+            if i+1 % training_batch == 0:
+                # Zero your gradients for every batch!
+                self.optimizer.zero_grad()
+                # Compute the loss and its gradients
+                loss = self.loss_fn(next_state_pred, next_state_out)
+                # Gather data and report
+                loss.backward()
+                # Adjust learning weights
+                self.optimizer.step()
+                last_loss = float(loss) / training_batch  # loss per batch
+                print(f'batch {i+1} loss: {round(last_loss,3)}')
 
         return last_loss
 

@@ -88,9 +88,9 @@ class SiamezeTrainer:
             logits = self.inverse_nn(emb_0, emb_1)
 
             if i+1 % training_batch == 0:
+                print(f'train batch {i+1}')
                 # Zero your gradients for every batch!
                 self.optimizer.zero_grad()
-
                 # Compute the loss and its gradients
                 loss = self.loss_fn(logits, action)
                 # Gather data and report
@@ -102,7 +102,7 @@ class SiamezeTrainer:
                 print(f'batch {i+1} loss: {round(last_loss,3)}')
                 # self.plots(epoch_index, training_loader, i, last_loss)
 
-            del action, next_state, state
+            del action, next_state, state, d
         return last_loss
 
     def no_plots(self, *args, **kwargs):

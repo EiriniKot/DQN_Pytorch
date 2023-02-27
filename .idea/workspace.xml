@@ -3,9 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="31362192-53f9-4de1-9848-8a0095f9596e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/alternative_train_alien.py" beforeDir="false" afterPath="$PROJECT_DIR$/alternative_train_alien.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/network.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/action_embeddings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/action_embeddings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/siameze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/siameze.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_action_emb.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_action_emb.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,7 +223,7 @@
       <workItem from="1677189917296" duration="1218000" />
       <workItem from="1677192471900" duration="2732000" />
       <workItem from="1677430911193" duration="8334000" />
-      <workItem from="1677517049855" duration="1066000" />
+      <workItem from="1677517049855" duration="4041000" />
     </task>
     <servers />
   </component>
@@ -248,16 +248,6 @@
           <url>file://$PROJECT_DIR$/play_3_DQN.py</url>
           <line>5</line>
           <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/action_embeddings.py</url>
-          <line>77</line>
-          <option name="timeStamp" value="50" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/action_embeddings.py</url>
-          <line>73</line>
-          <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/train_action_emb.py</url>
