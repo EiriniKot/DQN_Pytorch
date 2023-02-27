@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     runner = GamesRunner(json_config,
                          batch=json_config['batch_size'],
-                         envs=json_config['train_envs'],
+                         envs=json_config['final_env'],
                          h=json_config['h_frame'],
                          w=json_config['w_frame'],
                          tau=json_config['tau'],

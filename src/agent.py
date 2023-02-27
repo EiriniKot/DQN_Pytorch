@@ -90,9 +90,7 @@ class DqnAgent:
 
         # Compute the expected Q values
         expected_state_action_values = torch.add(next_state_values * self.gamma, reward_batch)
-
         loss = self.criterion(state_action_values, expected_state_action_values.unsqueeze(1))
-
 
         loss.backward()
 
@@ -118,8 +116,11 @@ class DqnAgent:
             self.target_net.load_state_dict(self.policy_net.state_dict())
 
     def soft_update(self, local_model, target_model, tau):
-        for target_param, local_param in zip(target_model.parameters(), local_model.parameters()):
-            target_param.data.copy_(tau * local_param.data + (1.0 - tau) * target_param.data)
+        target_net_state_dict = target_model.state_dict()
+        policy_net_state_dict = local_model.state_dict()
+        for key in policy_net_state_dict:
+            target_net_state_dict[key] = policy_net_state_dict[key] * tau + target_net_state_dict[key] * (1 - tau)
+        self.target_net.load_state_dict(target_net_state_dict)
 
 
 
