@@ -26,9 +26,4 @@ for epoch_indx in range(1):
 torch.save({'epoch': epoch_indx,
             'model_state_dict': encoder.state_dict(),
             'optimizer_state_dict': trainer.optimizer.state_dict(),
-            'loss': last_loss}, os.path.join(models_save, f'checkpoint_{epoch_indx}_encoder.pt'))
-
-torch.save({'epoch': epoch_indx,
-           'model_state_dict': inverse.state_dict(),
-           'optimizer_state_dict': trainer.optimizer.state_dict(),
-           'loss': last_loss}, os.path.join(models_save, f'checkpoint_{epoch_indx}_inverse.pt'))
+            'loss': last_loss}, os.path.join(models_save, 'encoder.pt'))
