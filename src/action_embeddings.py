@@ -15,7 +15,7 @@ class EmbeddingModel(nn.Module):
 
     def store(self, model_name):
         # torch.save(self.emb.state_dict(), os.path.join('models_action_emb', model_name))
-        torch.save({'model_state_dict': self.state_dict()}, os.path.join('models_action_emb', model_name))
+        torch.save({'model_state_dict': self.state_dict()}, model_name)
 
 
 class Forward(nn.Module):
