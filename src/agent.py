@@ -78,10 +78,10 @@ class DqnAgent:
         action_batch = torch.cat(experience.action, 0).to(self.device)
         reward_batch = torch.stack(experience.reward, 0).to(self.device)
 
+        self.optimizer.zero_grad()
         # state_batch = ['s1, s2, s3, s4' -> values for a4]
         out = self.policy_net(state_batch)
         # Action batch is the indexes that where played -batched
-
         state_action_values = torch.gather(out, 1, index=(action_batch.unsqueeze(1)))
         # State a values are the values that the network predicted for this state action pair
         next_state_values = torch.zeros(len(experience.state), device = self.device)
@@ -94,7 +94,7 @@ class DqnAgent:
 
         loss = self.criterion(state_action_values, expected_state_action_values.unsqueeze(1))
 
-        self.optimizer.zero_grad()
+
         loss.backward()
 
         # In-place gradient clipping

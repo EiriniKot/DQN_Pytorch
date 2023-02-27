@@ -1,4 +1,5 @@
 import json
+import torch
 from matplotlib import pyplot as plt
 
 from src.network import DqnNet
@@ -19,6 +20,7 @@ if __name__ == '__main__':
                          tau = json_config['tau'],
                          max_iterations_ep=json_config['max_iterations_ep'],
                          capacity=json_config['replay_capacity'],
+                         device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
                          p_net=policy_net,
                          t_net=target_net,
                          save_buffer=True,

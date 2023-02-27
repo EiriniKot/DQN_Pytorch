@@ -75,34 +75,37 @@ class SiamezeTrainer:
     def train_one_epoch(self,
                         epoch_index,
                         training_loader,
-                        training_batch = 1):
+                        printing_batch = 1):
         last_loss = 0.
-
+        all_loss = 0.
         for i, data in enumerate(training_loader):
             # Every data instance is an input + label pair
             state, action, d, next_state = data
             d.detach()
             action = F.one_hot(action, num_classes=18).double()
+
+            # Zero your gradients for every batch!
+            self.optimizer.zero_grad()
+
             emb_0 = self.encoder_nn(state)
             emb_1 = self.encoder_nn(next_state)
             logits = self.inverse_nn(emb_0, emb_1)
 
-            if i+1 % training_batch == 0:
-                print(f'train batch {i+1}')
-                # Zero your gradients for every batch!
-                self.optimizer.zero_grad()
-                # Compute the loss and its gradients
-                loss = self.loss_fn(logits, action)
-                # Gather data and report
-                loss.backward()
-                # Adjust learning weights
-                self.optimizer.step()
+            # Compute the loss and its gradients
+            loss = self.loss_fn(logits, action)
 
-                last_loss = float(loss) / training_batch  # loss per batch
-                print(f'batch {i+1} loss: {round(last_loss,3)}')
-                # self.plots(epoch_index, training_loader, i, last_loss)
+            # Gather data and report
+            loss.backward()
 
-            del action, next_state, state, d
+            # Adjust learning weights
+            self.optimizer.step()
+            all_loss += float(loss)
+
+            if i + 1 % printing_batch == 0:
+                last_loss = all_loss / printing_batch  # loss per batch
+                print(f'batch {i + 1} loss: {round(last_loss, 3)}')
+                all_loss = 0.
+        del action, next_state, state, d
         return last_loss
 
     def no_plots(self, *args, **kwargs):
