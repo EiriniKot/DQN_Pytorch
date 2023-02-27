@@ -42,13 +42,14 @@ class DqnNetAlternative(nn.Module):
                  enc_size,
                  emb_depth,
                  n_actions,
-                 encoder_path='models_inverse_encoded/encoder.pt',
-                 embed_path='models_action_emb/actions_embedding.pt'
+                 device= torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
+                 encoder_path='models/encoder.pt',
+                 embed_path='models/actions_embedding.pt'
                  ):
 
         super(DqnNetAlternative, self).__init__()
-        encoder = Encoder(h=h, w=w, enc_size=enc_size)
-        embedding = EmbeddingModel(num_embeddings=n_actions, embedding_dim=emb_depth)
+        encoder = Encoder(h=h, w=w, enc_size=enc_size).to(device)
+        embedding = EmbeddingModel(num_embeddings=n_actions, embedding_dim=emb_depth).to(device)
 
         self.enc_load = ModelLoader(path=encoder_path,
                                     model_to_load=encoder,

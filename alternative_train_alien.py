@@ -13,6 +13,7 @@ if __name__ == '__main__':
                                 enc_size=json_config['enc_size'],
                                 emb_depth=json_config['emb_depth'],
                                 n_actions=json_config['n_actions'],
+                                device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
                                 encoder_path='models/encoder.pt',
                                 embed_path='models/embedding.pt')
 
@@ -27,7 +28,7 @@ if __name__ == '__main__':
                          device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
                          p_net=dqn_net,
                          t_net=dqn_net,
-                         save_buffer=True,
+                         save_buffer=False,
                          num_episodes=60)
 
     scores, loss = runner.run()

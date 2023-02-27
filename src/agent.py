@@ -23,7 +23,6 @@ class DqnAgent:
         # Copy both networks into device
         self.policy_net = p_net.to(device)
         self.target_net = t_net.to(device)
-        # self.target_net.load_state_dict(self.policy_net.state_dict())
 
         # Disables grad eval
         self.target_net.eval()
