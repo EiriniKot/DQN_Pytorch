@@ -17,7 +17,9 @@ buffer = ReplayMemory(capacity=None,
 dt_iter = ExperienceDataset(buffer)
 
 # Load All Models for Trainer
-enc = Encoder(h=json_config['h_frame'], w=json_config['w_frame'], enc_size=json_config['enc_size'])
+enc = Encoder(h=json_config['h_frame'],
+              w=json_config['w_frame'],
+              enc_size=json_config['enc_size']).to(device)
 encoder = ModelLoader(path='models/encoder.pt',
                       model_to_load=enc,
                       frozen=True)

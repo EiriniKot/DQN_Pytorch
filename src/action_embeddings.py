@@ -60,15 +60,14 @@ class ActionEmbTrainer:
                         printing_batch = 10):
         last_loss = 0.
         all_loss = 0.
-        self.optimizer.zero_grad(set_to_none=True)
 
         for i, data in enumerate(training_loader):
             # Every data instance is an input + label pair
             # Zero your gradients for every batch!
-            self.optimizer.zero_grad()
             state, action, d, next_state = data
             d.detach()
 
+            self.optimizer.zero_grad()
             enc_state = self.encoder_nn.predict(state)
             embed_a = self.embedding(action)
             next_state_pred = self.forward(embed_a, enc_state)
