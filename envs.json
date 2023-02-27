@@ -11,7 +11,7 @@
   "replay_capacity": 50,
   "sampling": {"window_size": 4,
                "window_step": 1},
-  "tau": 0.001,
+  "tau": 0.06,
   "policy_specs": {"gamma":0.99,"eps_start":0.9, "lr": 0.001,
                   "eps_end":0.05,"eps_decay":1000},
   "enc_size": 200,
