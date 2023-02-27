@@ -19,10 +19,10 @@ trainer = SiamezeTrainer(encoder, inverse, tensorboard=False)
 models_save = os.path.join(os.getcwd(), 'models')
 
 buffer = ReplayMemory(capacity=json_config['replay_capacity'], device=device, **json_config['sampling'])
-dt_iter = ExperienceDataset(buffer, path_folder='/saved_games')
+dt_iter = ExperienceDataset(buffer, path_folder='saved_games')
 
 for epoch_indx in range(1):
-  last_loss = trainer.train_one_epoch(epoch_indx, dt_iter, training_batch=1)
+  last_loss = trainer.train_one_epoch(epoch_indx, dt_iter, printing_batch=1)
 
 torch.save({'epoch': epoch_indx,
             'model_state_dict': encoder.state_dict(),
