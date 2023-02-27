@@ -1,4 +1,5 @@
 import json
+import torch
 from matplotlib import pyplot as plt
 
 from src.network import DqnNetAlternative
@@ -12,17 +13,22 @@ if __name__ == '__main__':
                                 enc_size=json_config['enc_size'],
                                 emb_depth=json_config['emb_depth'],
                                 n_actions=json_config['n_actions'],
-                                encoder_path='models_inverse_encoded/encoder.pt',
-                                embed_path='models_action_emb/actions_embedding.pt')
+                                encoder_path='models/encoder.pt',
+                                embed_path='models/embedding.pt')
 
     runner = GamesRunner(json_config,
                          batch=json_config['batch_size'],
-                         envs=json_config['final_env'],
-                         h=json_config['h_frame'], w=json_config['w_frame'],
+                         envs=json_config['train_envs'],
+                         h=json_config['h_frame'],
+                         w=json_config['w_frame'],
+                         tau=json_config['tau'],
+                         max_iterations_ep=json_config['max_iterations_ep'],
                          capacity=json_config['replay_capacity'],
-                         network=dqn_net,
-                         save_buffer=False,
-                         num_episodes=20)
+                         device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
+                         p_net=dqn_net,
+                         t_net=dqn_net,
+                         save_buffer=True,
+                         num_episodes=60)
 
     scores, loss = runner.run()
 
