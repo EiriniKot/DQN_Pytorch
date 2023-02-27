@@ -41,7 +41,7 @@ class ActionEmbTrainer:
         self.loss_fn = lambda pred, targ: torch.sqrt(self.loss_mse(pred, targ))
 
         params = self.chain(*[self.embedding.parameters(), self.forward.parameters()])
-        self.optimizer = torch.optim.RMSprop(params, lr=0.001)
+        self.optimizer = torch.optim.Adam(params, lr=0.0001)
 
         if tensorboard:
             self.writer = SummaryWriter()
@@ -57,7 +57,7 @@ class ActionEmbTrainer:
     def train_one_epoch(self,
                         epoch_index,
                         training_loader,
-                        printing_batch = 10):
+                        printing_batch=10):
         last_loss = 0.
         all_loss = 0.
 
@@ -84,7 +84,7 @@ class ActionEmbTrainer:
 
             if (i+1) % printing_batch == 0:
                 last_loss = all_loss/printing_batch  # loss per batch
-                print(f'batch {i+1} loss: {round(last_loss,3)}')
+                print(f'epoch {epoch_index} batch {i+1} loss: {round(last_loss,3)} ')
                 all_loss=0.
 
         return last_loss
