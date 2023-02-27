@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="31362192-53f9-4de1-9848-8a0095f9596e" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/src/siameze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/siameze.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train_inverse.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_inverse.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -220,7 +221,7 @@
       <workItem from="1677189917296" duration="1218000" />
       <workItem from="1677192471900" duration="2732000" />
       <workItem from="1677430911193" duration="8334000" />
-      <workItem from="1677517049855" duration="14239000" />
+      <workItem from="1677517049855" duration="14962000" />
     </task>
     <servers />
   </component>

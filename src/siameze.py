@@ -101,7 +101,7 @@ class SiamezeTrainer:
             self.optimizer.step()
             all_loss += float(loss)
 
-            if i + 1 % printing_batch == 0:
+            if (i+1) % printing_batch == 0:
                 last_loss = all_loss / printing_batch  # loss per batch
                 print(f'batch {i + 1} loss: {round(last_loss, 3)}')
                 all_loss = 0.
