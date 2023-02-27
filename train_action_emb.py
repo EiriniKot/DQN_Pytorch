@@ -18,7 +18,7 @@ dt_iter = ExperienceDataset(buffer)
 
 # Load All Models for Trainer
 enc = Encoder(h=json_config['h_frame'], w=json_config['w_frame'], enc_size=json_config['enc_size'])
-encoder = ModelLoader(path='model/encoder.pt',
+encoder = ModelLoader(path='models/encoder.pt',
                       model_to_load=enc,
                       frozen=True)
 
@@ -32,6 +32,6 @@ trainer = ActionEmbTrainer(encoder, embedding, forward, num_l=18, tensorboard=Fa
 
 for epoch_indx in range(2):
     dt_iter = ExperienceDataset(buffer)
-    last_loss = trainer.train_one_epoch(epoch_indx, dt_iter, training_batch = 1)
+    last_loss = trainer.train_one_epoch(epoch_indx, dt_iter, printing_batch = 1)
 
 embedding.store('actions_embedding.pt')
