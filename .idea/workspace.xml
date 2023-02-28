@@ -3,10 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="31362192-53f9-4de1-9848-8a0095f9596e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Part_B_train_inverse.py" beforeDir="false" afterPath="$PROJECT_DIR$/Part_B_train_inverse.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Part_C_train_action_emb.py" beforeDir="false" afterPath="$PROJECT_DIR$/Part_C_train_action_emb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/action_embeddings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/action_embeddings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/siameze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/siameze.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/alternative_train_alien.py" beforeDir="false" afterPath="$PROJECT_DIR$/Part_D_TrainAlienAlternative.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/network.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/network.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +41,7 @@
     "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
 }]]></component>
-  <component name="RunManager" selected="Python.Part_C_train_action_emb">
+  <component name="RunManager" selected="Python.Part_D_TrainAlienAlternative">
     <configuration name="Part_A_play_3_DQN" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="DQN_Pytorch" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -109,7 +108,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="alternative_train_alien" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="Part_D_TrainAlienAlternative" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="DQN_Pytorch" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -122,7 +121,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/alternative_train_alien.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Part_D_TrainAlienAlternative.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -177,9 +176,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Part_D_TrainAlienAlternative" />
         <item itemvalue="Python.Part_C_train_action_emb" />
         <item itemvalue="Python.Part_B_train_inverse" />
-        <item itemvalue="Python.alternative_train_alien" />
         <item itemvalue="Python.multiexample" />
         <item itemvalue="Python.j" />
       </list>
@@ -225,7 +224,7 @@
       <workItem from="1677192471900" duration="2732000" />
       <workItem from="1677430911193" duration="8334000" />
       <workItem from="1677517049855" duration="20074000" />
-      <workItem from="1677576577486" duration="12085000" />
+      <workItem from="1677576577486" duration="14788000" />
     </task>
     <servers />
   </component>
@@ -247,16 +246,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Part_C_train_action_emb.py</url>
-          <line>26</line>
-          <option name="timeStamp" value="53" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Part_C_train_action_emb.py</url>
-          <line>28</line>
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/src/network.py</url>
           <line>78</line>
           <option name="timeStamp" value="55" />
@@ -268,10 +257,11 @@
     <SUITE FILE_PATH="coverage/DQN_Pytorch$main.coverage" NAME="main Coverage Results" MODIFIED="1676494531191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$j.coverage" NAME="j Coverage Results" MODIFIED="1676744187154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$x.coverage" NAME="x Coverage Results" MODIFIED="1674510725320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/DQN_Pytorch$train_inverse.coverage" NAME="train_inverse Coverage Results" MODIFIED="1677591570494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DQN_Pytorch$train_inverse.coverage" NAME="Part_B_train_inverse Coverage Results" MODIFIED="1677597055964" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$multiexample.coverage" NAME="multiexample Coverage Results" MODIFIED="1676759701471" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$alternative_train_alien.coverage" NAME="alternative_train_alien Coverage Results" MODIFIED="1676760123846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/DQN_Pytorch$Part_C_train_action_emb.coverage" NAME="Part_C_train_action_emb Coverage Results" MODIFIED="1677596230165" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DQN_Pytorch$Part_C_train_action_emb.coverage" NAME="Part_C_train_action_emb Coverage Results" MODIFIED="1677597856576" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DQN_Pytorch$Part_D_TrainAlienAlternative.coverage" NAME="Part_D_TrainAlienAlternative Coverage Results" MODIFIED="1677598568881" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$train_action_emb.coverage" NAME="train_action_emb Coverage Results" MODIFIED="1676759943119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$play_3_DQN.coverage" NAME="play_3_DQN Coverage Results" MODIFIED="1677589631061" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

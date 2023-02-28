@@ -18,7 +18,8 @@ class ModelLoader:
         and no backpropagation will be applied on them
         """
         self.model_loaded = model_to_load
-        self.model_loaded.load_state_dict(torch.load(path)['model_state_dict'])
+        self.model_loaded.load_state_dict(torch.load(path,
+                                                     map_location= torch.device('cuda' if torch.cuda.is_available() else 'cpu'))['model_state_dict'])
         if frozen:
             self.model_loaded.eval()
             for param in self.model_loaded.parameters():

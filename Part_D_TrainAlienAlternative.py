@@ -9,22 +9,23 @@ if __name__ == '__main__':
     f = open('envs.json')
     json_config = json.load(f)
     policy_net = DqnNetAlternative(h=json_config['h_frame'],
-                                w=json_config['w_frame'],
-                                enc_size=json_config['enc_size'],
-                                emb_depth=json_config['emb_depth'],
-                                n_actions=json_config['n_actions'],
-                                device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
-                                encoder_path='models/encoder.pt',
-                                embed_path='models/embedding.pt')
+                                    w=json_config['w_frame'],
+                                    enc_size=json_config['enc_size'],
+                                    emb_depth=json_config['emb_depth'],
+                                    n_actions=json_config['n_actions'],
+                                    device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
+                                    encoder_path='models/encoder.pt',
+                                    embed_path='models/embeddings.pt')
 
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     target_net = DqnNetAlternative(h=json_config['h_frame'],
                                    w=json_config['w_frame'],
                                    enc_size=json_config['enc_size'],
                                    emb_depth=json_config['emb_depth'],
                                    n_actions=json_config['n_actions'],
-                                   device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
+                                   device=device,
                                    encoder_path='models/encoder.pt',
-                                   embed_path='models/embedding.pt')
+                                   embed_path='models/embeddings.pt')
 
     target_net.load_state_dict(policy_net.state_dict())
 
@@ -36,7 +37,7 @@ if __name__ == '__main__':
                          tau=json_config['tau'],
                          max_iterations_ep=json_config['max_iterations_ep'],
                          capacity=json_config['replay_capacity'],
-                         device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
+                         device=device,
                          p_net=policy_net,
                          t_net=target_net,
                          save_buffer=False,
