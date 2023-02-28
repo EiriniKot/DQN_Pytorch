@@ -67,8 +67,8 @@ class ActionEmbTrainer:
                     Frequency of error plots
         :return:
         """
-        last_loss = 0.
         all_loss = 0.
+        loss_return = []
 
         for i, data in enumerate(training_loader):
             # Every data instance is an input + label pair
@@ -90,12 +90,13 @@ class ActionEmbTrainer:
             self.optimizer.step()
 
             all_loss+= float(loss)
+            loss_return.append(float(loss))
             if (i+1) % printing_batch == 0:
                 last_loss = all_loss/printing_batch  # loss per batch
                 print(f'epoch {epoch_index} batch {i+1} loss: {round(last_loss,3)} ')
                 all_loss=0.
 
-        return last_loss
+        return loss_return
 
     def no_plots(self, *args, **kwargs):
         pass

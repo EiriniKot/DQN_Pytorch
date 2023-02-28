@@ -3,13 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="31362192-53f9-4de1-9848-8a0095f9596e" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/multiexample.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/play_3_DQN.py" beforeDir="false" afterPath="$PROJECT_DIR$/Part_A_play_3_DQN.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part_B_train_inverse.py" beforeDir="false" afterPath="$PROJECT_DIR$/Part_B_train_inverse.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part_C_train_action_emb.py" beforeDir="false" afterPath="$PROJECT_DIR$/Part_C_train_action_emb.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/action_embeddings.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/action_embeddings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agent.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agent.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/siameze.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/siameze.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_action_emb.py" beforeDir="false" afterPath="$PROJECT_DIR$/Part_C_train_action_emb.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_inverse.py" beforeDir="false" afterPath="$PROJECT_DIR$/Part_B_train_inverse.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -228,7 +225,7 @@
       <workItem from="1677192471900" duration="2732000" />
       <workItem from="1677430911193" duration="8334000" />
       <workItem from="1677517049855" duration="20074000" />
-      <workItem from="1677576577486" duration="11250000" />
+      <workItem from="1677576577486" duration="12085000" />
     </task>
     <servers />
   </component>
@@ -274,7 +271,7 @@
     <SUITE FILE_PATH="coverage/DQN_Pytorch$train_inverse.coverage" NAME="train_inverse Coverage Results" MODIFIED="1677591570494" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$multiexample.coverage" NAME="multiexample Coverage Results" MODIFIED="1676759701471" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$alternative_train_alien.coverage" NAME="alternative_train_alien Coverage Results" MODIFIED="1676760123846" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/DQN_Pytorch$Part_C_train_action_emb.coverage" NAME="Part_C_train_action_emb Coverage Results" MODIFIED="1677595126368" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DQN_Pytorch$Part_C_train_action_emb.coverage" NAME="Part_C_train_action_emb Coverage Results" MODIFIED="1677596230165" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$train_action_emb.coverage" NAME="train_action_emb Coverage Results" MODIFIED="1676759943119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$play_3_DQN.coverage" NAME="play_3_DQN Coverage Results" MODIFIED="1677589631061" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>

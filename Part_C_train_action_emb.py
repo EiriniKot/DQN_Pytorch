@@ -1,5 +1,6 @@
 import json
 import torch
+from matplotlib import pyplot as plt
 
 from src.buffer import ReplayMemory, ExperienceDataset
 from src.action_embeddings import EmbeddingModel, Forward, ActionEmbTrainer
@@ -20,10 +21,13 @@ dt_iter = ExperienceDataset(buffer)
 enc = Encoder(h=json_config['h_frame'],
               w=json_config['w_frame'],
               enc_size=json_config['enc_size']).to(device)
+
+# Set frozen to True so that the model is not trainable
 encoder = ModelLoader(path='models/encoder.pt',
                       model_to_load=enc,
                       frozen=True)
 
+# Initialize Embedding and Forward network
 embedding = EmbeddingModel(num_embeddings=json_config['n_actions'],
                            embedding_dim=json_config['emb_depth']).to(device)
 forward = Forward().to(device)
@@ -31,9 +35,12 @@ forward = Forward().to(device)
 # Initialize Trainer
 trainer = ActionEmbTrainer(encoder, embedding, forward, num_l=18, tensorboard=False)
 
-
 for epoch_indx in range(2):
     dt_iter = ExperienceDataset(buffer)
-    last_loss = trainer.train_one_epoch(epoch_indx, dt_iter, printing_batch = 1)
+    loss = trainer.train_one_epoch(epoch_indx, dt_iter, printing_batch = 3)
 
-embedding.store('actions_embedding.pt')
+    plt.title(f'Loss History')
+    plt.plot(loss)
+    plt.show()
+
+embedding.store('models/embeddings.pt')
