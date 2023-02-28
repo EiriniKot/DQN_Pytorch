@@ -60,8 +60,6 @@ class DqnNetAlternative(nn.Module):
                                         model_to_load=embedding,
                                         frozen=False)
 
-        # self.lin_0 = nn.Linear(in_features=enc_size, out_features=emb_depth)
-        # self.lin_1 = nn.Linear(in_features=emb_depth*n_actions, out_features=emb_depth)
         self.multihead = nn.MultiheadAttention(embed_dim=enc_size,
                                                num_heads=4,
                                                kdim=emb_depth,
@@ -71,7 +69,7 @@ class DqnNetAlternative(nn.Module):
         self.head = nn.Linear(enc_size, n_actions)
 
     def forward(self, x):
-        x = self.enc_load.predict(x)
+        x = self.enc_load.predict(x) # [1, 3, 4, 200, 200] - > [1, 200]
         x = torch.unsqueeze(x, 1)
         emb = self.embedding_nn.model_loaded.emb.weight
         emb = torch.unsqueeze(emb, 0).repeat(x.shape[0],1,1)
