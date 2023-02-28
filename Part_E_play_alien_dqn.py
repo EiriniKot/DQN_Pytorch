@@ -27,7 +27,7 @@ if __name__ == '__main__':
                          p_net=policy_net,
                          t_net=target_net,
                          save_buffer=False,
-                         num_episodes=100)
+                         num_episodes=1)
 
     scores, loss = runner.run()
 
