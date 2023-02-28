@@ -39,10 +39,3 @@ if __name__ == '__main__':
     plt.title(f'Loss History')
     plt.plot(loss)
     plt.show()
-
-
-
-
-
-
-
