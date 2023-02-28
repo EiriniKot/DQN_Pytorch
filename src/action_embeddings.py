@@ -1,4 +1,3 @@
-import os
 import torch
 from torch import nn
 from torch.utils.tensorboard import SummaryWriter
@@ -14,7 +13,6 @@ class EmbeddingModel(nn.Module):
         return emb_action
 
     def store(self, model_name):
-        # torch.save(self.emb.state_dict(), os.path.join('models_action_emb', model_name))
         torch.save({'model_state_dict': self.state_dict()}, model_name)
 
 
@@ -58,6 +56,17 @@ class ActionEmbTrainer:
                         epoch_index,
                         training_loader,
                         printing_batch=10):
+        """
+        This is a function that is responsible for consuming the data loader and training them
+        for Action Embeddings Network.
+        :param epoch_index: int
+                    Epoch index just for plots
+        :param training_loader: IterableDataset
+                    Torch iterable dataset with experiences
+        :param printing_batch: int
+                    Frequency of error plots
+        :return:
+        """
         last_loss = 0.
         all_loss = 0.
 
@@ -81,7 +90,6 @@ class ActionEmbTrainer:
             self.optimizer.step()
 
             all_loss+= float(loss)
-
             if (i+1) % printing_batch == 0:
                 last_loss = all_loss/printing_batch  # loss per batch
                 print(f'epoch {epoch_index} batch {i+1} loss: {round(last_loss,3)} ')

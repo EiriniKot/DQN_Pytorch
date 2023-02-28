@@ -76,6 +76,17 @@ class SiamezeTrainer:
                         epoch_index,
                         training_loader,
                         printing_batch = 1):
+        """
+        This is a function that is responsible for consuming the data loader and training them
+        for Siameze Network.
+        :param epoch_index: int
+                    Epoch index just for plots
+        :param training_loader: IterableDataset
+                    Torch iterable dataset with experiences
+        :param printing_batch: int
+                    Frequency of error plots
+        :return:
+        """
         last_loss = 0.
         all_loss = 0.
         for i, data in enumerate(training_loader):
@@ -103,7 +114,7 @@ class SiamezeTrainer:
 
             if (i+1) % printing_batch == 0:
                 last_loss = all_loss / printing_batch  # loss per batch
-                print(f'batch {i + 1} loss: {round(last_loss, 3)}')
+                print(f'epoch {epoch_index} batch {i + 1} loss: {round(last_loss, 3)}')
                 all_loss = 0.
         del action, next_state, state, d
         return last_loss

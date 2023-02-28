@@ -101,8 +101,6 @@ class DqnAgent:
         return loss
 
     def train_one_epoch(self, experience):
-        # Optimize the model
-        # self.optimizer.zero_grad()
         self.loss_fn(experience)
         self.optimizer.step()
 
