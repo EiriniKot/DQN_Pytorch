@@ -33,9 +33,9 @@ class ModelLoader:
 class GamesRunner:
     def __init__(self, specs, h, w,
                  batch=10,
-                 envs = [],
+                 envs=[],
                  capacity=100,
-                 tau = 0.001,
+                 tau=0.001,
                  max_iterations_ep=2000,
                  save_buffer=False,
                  p_net=None,
@@ -95,7 +95,6 @@ class GamesRunner:
         return cat_states
 
     def run(self):
-        str_info = []
         new_shape = (1, 3, 1, self.h, self.w)
         scores = {}
         for env_n, env in self.envs.items():
