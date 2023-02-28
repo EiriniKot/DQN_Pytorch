@@ -8,16 +8,17 @@ from src.nn_utils import GamesRunner
 if __name__ == '__main__':
     f = open('envs.json')
     json_config = json.load(f)
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
     policy_net = DqnNetAlternative(h=json_config['h_frame'],
                                     w=json_config['w_frame'],
                                     enc_size=json_config['enc_size'],
                                     emb_depth=json_config['emb_depth'],
                                     n_actions=json_config['n_actions'],
-                                    device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
+                                    device=device,
                                     encoder_path='models/encoder.pt',
                                     embed_path='models/embeddings.pt')
 
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     target_net = DqnNetAlternative(h=json_config['h_frame'],
                                    w=json_config['w_frame'],
                                    enc_size=json_config['enc_size'],
@@ -53,6 +54,12 @@ if __name__ == '__main__':
     plt.title(f'Loss History')
     plt.plot(loss)
     plt.show()
+
+    torch.save({'model_state_dict': runner.agent.policy_net.state_dict(),
+                'optimizer_state_dict': runner.agent.optimizer.state_dict()}, 'models/policy_alternative.pt')
+
+    torch.save({'model_state_dict': runner.agent.target_net.state_dict(),
+                'optimizer_state_dict': runner.agent.optimizer.state_dict()}, 'models/target_alternative.pt')
 
 
 
