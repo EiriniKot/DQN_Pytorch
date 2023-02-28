@@ -22,7 +22,7 @@ buffer = ReplayMemory(capacity=json_config['replay_capacity'], device=device, **
 dt_iter = ExperienceDataset(buffer, path_folder='saved_games')
 
 for epoch_indx in range(1):
-  last_loss = trainer.train_one_epoch(epoch_indx, dt_iter, printing_batch=1)
+  last_loss = trainer.train_one_epoch(epoch_indx, dt_iter, printing_batch=12)
 
 # Save model encoder only inverse will not be needed
 torch.save({'epoch': epoch_indx,

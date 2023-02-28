@@ -5,6 +5,9 @@ from matplotlib import pyplot as plt
 from src.network import DqnNet
 from src.nn_utils import GamesRunner
 
+# Find me also here
+# https://colab.research.google.com/drive/1UEcce_d-FFU_8bT94pSJvsn-H7kHrxZz?usp=sharing
+
 if __name__ == '__main__':
     f = open('envs.json')
     json_config = json.load(f)

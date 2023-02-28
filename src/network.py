@@ -14,6 +14,7 @@ class DqnNet(nn.Module):
         self.conv2 = nn.Conv3d(32, 64, kernel_size=(1, 3, 3), stride=2)
         self.maxpool2 = nn.MaxPool3d(kernel_size=(1,2,2), stride=1)
         self.conv3 = nn.Conv3d(64, 32, kernel_size=(1, 3, 3), stride=2)
+
         # Number of Linear input connections depends on output of conv2d layers
         # and therefore the input image size, so compute it.
 
