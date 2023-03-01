@@ -36,7 +36,8 @@ if __name__ == '__main__':
     # Initialize Trainer
     trainer = ActionEmbTrainer(encoder, embedding, forward, num_l=18, tensorboard=False)
 
-    for epoch_indx in range(2):
+    epochs = 2
+    for epoch_indx in range(epochs):
         dt_iter = ExperienceDataset(buffer)
         loss = trainer.train_one_epoch(epoch_indx, dt_iter, printing_batch=3)
 

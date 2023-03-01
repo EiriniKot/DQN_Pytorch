@@ -43,7 +43,7 @@ class DqnNetAlternative(nn.Module):
                  enc_size,
                  emb_depth,
                  n_actions,
-                 device= torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
+                 device=torch.device('cuda' if torch.cuda.is_available() else 'cpu'),
                  encoder_path='models/encoder.pt',
                  embed_path='models/embeddings.pt'
                  ):

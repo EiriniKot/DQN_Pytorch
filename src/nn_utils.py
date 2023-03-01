@@ -77,6 +77,14 @@ class GamesRunner:
         os.makedirs('saved_games', exist_ok=True)
 
     def get_init_state(self, env):
+        """
+        This function is responsible for building the initial state of the env considering
+        the case of 4 stacked frames.
+        First it resets the env and normalize frame values. Then it resizes the frames and stacks
+        3 zero valued frames with the initial environment state
+        :param env: gym env
+        :return: cat_states: torch.Tensor
+        """
         # Initialize the environment and state
         init_state = env.reset()[0]
         init_state = np.divide(init_state, 255.)
@@ -91,7 +99,6 @@ class GamesRunner:
         empty_states = torch.tensor(empty_states, device=self.device).type(torch.float32)
 
         cat_states = torch.cat((empty_states, init_state), 2)
-        # del init_state, new_shape, empty_states
         return cat_states
 
     def run(self):
@@ -99,10 +106,8 @@ class GamesRunner:
         scores = {}
         for env_n, env in self.envs.items():
             print(f'Environment --- {env_n} ---')
-
             scores[env_n] = []
             self.agent.steps_done = 0
-
             for ep in range(self.num_episodes):
                 print(f'Episode number --- {ep} ---')
                 env.reset()
@@ -144,6 +149,7 @@ class GamesRunner:
                         self.agent.train(experience, epochs=5)
                         self.agent.soft_update(self.p_network, self.t_network, tau=self.tau)
 
+                        # Save buffer is a boolean that can switch if you want to save frames or not
                         if self.save_buffer:
                             add_unix_time = str(int(time.mktime(datetime.datetime.now().timetuple())))
                             self.r_buffer.save_local(f'saved_games/{ep}_{t}_{add_unix_time}_{env_n}.pt')
@@ -152,6 +158,9 @@ class GamesRunner:
 
                         del transitions, experience
 
+                    # Here we add an extra reason to stop the game
+                    # If the game reaches max_iterations_ep without any reward
+                    # we stop the game
                     reason_to_stop = t >= self.max_iterations_ep and sum_reward==0
                     if done or reason_to_stop:
                         print(f'Episode ended at {t}')

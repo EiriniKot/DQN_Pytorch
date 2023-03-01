@@ -34,6 +34,12 @@ class ReplayMemory(object):
         return self.__len__() == self.capacity
 
     def save_local(self, output_name):
+        """
+        This function is responsible for saving replay buffer content locally and
+        cleaning buffer.
+        :param output_name: str
+        :return:
+        """
         if len(self.memory) > 0:
             torch.save(self.memory, output_name)
             self.memory.clear()

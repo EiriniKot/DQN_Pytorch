@@ -26,7 +26,8 @@ if __name__ == '__main__':
     buffer = ReplayMemory(capacity=json_config['replay_capacity'], device=device, **json_config['sampling'])
     dt_iter = ExperienceDataset(buffer, path_folder='saved_games')
 
-    for epoch_indx in range(1):
+    epochs = 2
+    for epoch_indx in range(epochs):
       loss = trainer.train_one_epoch(epoch_indx, dt_iter, printing_batch=12)
       plt.title(f'Loss History')
       plt.plot(loss)
