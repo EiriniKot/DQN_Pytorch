@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="31362192-53f9-4de1-9848-8a0095f9596e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Watch_me_play.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/nn_utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/nn_utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Part_D_TrainAlienAlternative.py" beforeDir="false" afterPath="$PROJECT_DIR$/Part_D_TrainAlienAlternative.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,24 +28,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/eirini/PycharmProjects/DQN_Pytorch",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "settings.editor.selected.configurable": "configurable.group.editor"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/home/eirini/PycharmProjects/DQN_Pytorch&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;configurable.group.editor&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/models" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.Watch_me_play">
+  <component name="RunManager" selected="Python.Part_D_TrainAlienAlternative">
     <configuration name="Part_A_play_3_DQN" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="DQN_Pytorch" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -182,10 +180,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Part_D_TrainAlienAlternative" />
         <item itemvalue="Python.Watch_me_play" />
         <item itemvalue="Python.h" />
         <item itemvalue="Python.Part_E_play_alien_dqn" />
-        <item itemvalue="Python.Part_D_TrainAlienAlternative" />
         <item itemvalue="Python.Part_C_train_action_emb" />
       </list>
     </recent_temporary>
@@ -231,7 +229,8 @@
       <workItem from="1677430911193" duration="8334000" />
       <workItem from="1677517049855" duration="20074000" />
       <workItem from="1677576577486" duration="20125000" />
-      <workItem from="1677626971811" duration="10896000" />
+      <workItem from="1677626971811" duration="15195000" />
+      <workItem from="1677690706800" duration="1912000" />
     </task>
     <servers />
   </component>
@@ -263,9 +262,9 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/DQN_Pytorch$j.coverage" NAME="j Coverage Results" MODIFIED="1676744187154" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$train_inverse.coverage" NAME="Part_B_train_inverse Coverage Results" MODIFIED="1677597055964" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/DQN_Pytorch$Watch_me_play.coverage" NAME="Watch_me_play Coverage Results" MODIFIED="1677682520959" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/DQN_Pytorch$Part_D_TrainAlienAlternative.coverage" NAME="Part_D_TrainAlienAlternative Coverage Results" MODIFIED="1677627009163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DQN_Pytorch$Watch_me_play.coverage" NAME="Watch_me_play Coverage Results" MODIFIED="1677684537516" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$Part_E_play_alien_dqn.coverage" NAME="Part_E_play_alien_dqn Coverage Results" MODIFIED="1677671816322" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DQN_Pytorch$Part_D_TrainAlienAlternative.coverage" NAME="Part_D_TrainAlienAlternative Coverage Results" MODIFIED="1677690720938" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$play_3_DQN.coverage" NAME="play_3_DQN Coverage Results" MODIFIED="1677589631061" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$main.coverage" NAME="main Coverage Results" MODIFIED="1676494531191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/DQN_Pytorch$x.coverage" NAME="x Coverage Results" MODIFIED="1674510725320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

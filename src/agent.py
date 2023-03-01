@@ -25,7 +25,6 @@ class DqnAgent:
         self.target_net = t_net.to(device)
 
         # Disables grad eval
-        self.target_net.eval()
         self.optimizer = getattr(optim, optimizer)(params=self.policy_net.parameters(), lr=lr, amsgrad=True)
 
         self.gamma = gamma
