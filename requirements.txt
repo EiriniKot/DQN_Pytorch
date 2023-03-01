@@ -6,3 +6,4 @@ gym[accept-rom-license]
 torch==1.13.0
 numpy==1.23.4
 tensorboard
+opencv-python

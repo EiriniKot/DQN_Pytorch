@@ -6,7 +6,8 @@ from src.agent import DqnAgent
 from src.buffer import ReplayMemory, Transition
 from itertools import count
 import datetime
-
+import cv2
+from matplotlib import pyplot as plt
 
 class ModelLoader:
     def __init__(self, path, model_to_load, frozen=True):
@@ -38,6 +39,7 @@ class GamesRunner:
                  tau=0.001,
                  max_iterations_ep=2000,
                  save_buffer=False,
+                 animation= False,
                  p_net=None,
                  t_net=None,
                  device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
@@ -53,6 +55,9 @@ class GamesRunner:
         self.tau = tau
         self.batch =batch
         self.save_buffer = save_buffer
+        self.animation = animation
+        if self.animation:
+            os.makedirs('plots', exist_ok=True)
 
         self.device = device
         self.capacity = capacity
@@ -115,6 +120,14 @@ class GamesRunner:
                 state = self.get_init_state(env)
 
                 for t in count():
+                    if self.animation:
+                        plt.imshow(env.render())
+                        plt.grid(False)
+                        plt.title(f'Episode number --- {ep} ---')
+                        add_unix_time = str(int(time.mktime(datetime.datetime.now().timetuple())))
+                        plt.savefig(f'plots/{ep}{add_unix_time}.png')
+                        plt.close()
+
                     action = self.agent.policy(state)
                     next_state, reward, done, truncated, _ = env.step(action)
                     sum_reward += reward
@@ -170,4 +183,23 @@ class GamesRunner:
                 scores[env_n].append(float(sum_reward))
                 print(f'Reward  :  {sum_reward} --- and last loss  : {self.agent.loss_saver[-1]}\n')
 
+        if self.animation:
+            self.make_video(video_name='video2.avi')
         return scores, self.agent.loss_saver
+
+    def make_video(self, video_name='video.avi'):
+        image_folder = 'plots'
+        images = [img for img in os.listdir(image_folder) if img.endswith(".png")]
+        frame = cv2.imread(os.path.join(image_folder, images[0]))
+        height, width, layers = frame.shape
+
+        video = cv2.VideoWriter('videio.avi',
+                                fourcc=cv2.VideoWriter_fourcc('m', 'p', '4', 'v'),
+                                fps=10.,
+                                frameSize=(width, height))
+
+        for image in sorted(images):
+            video.write(cv2.imread(os.path.join(image_folder, image)))
+
+        cv2.destroyAllWindows()
+        video.release()
