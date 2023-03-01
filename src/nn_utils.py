@@ -180,8 +180,9 @@ class GamesRunner:
                         break
 
                 del state
-                scores[env_n].append(float(sum_reward))
-                print(f'Reward  :  {sum_reward} --- and last loss  : {self.agent.loss_saver[-1]}\n')
+                scores[env_n].append(float(sum_reward)/t)
+                print(f''
+                      f'Reward  :  {sum_reward} --- and last loss  : {self.agent.loss_saver[-1]}\n')
 
         if self.animation:
             self.make_video(video_name='video2.avi')
